@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Nursy – Pflege mit Herz</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+  <header class="topbar">
+    <div class="container topbar__inner">
+      <a class="brand" href="index.html" aria-label="Nursy Startseite">
+        <span class="brand__dot" aria-hidden="true"></span>
+        <span class="brand__text">
+          <strong>Nursy</strong>
+          <span>Pflege mit Herz</span>
+        </span>
+      </a>
+
+      <nav class="nav" aria-label="Hauptnavigation">
+        <a href="functions.html">Funktionen</a>
+        <a href="how.html">So funktioniert’s</a>
+        <a href="#login">Login</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="hero">
+      <div class="hero__content">
+        <div class="badge">Standortbasiert · Direkt buchbar · Sicher</div>
+
+        <h1>Flexible Pflege. Schnell. Sicher.</h1>
+        <p>
+          Nursy verbindet Pflegekräfte und Klienten in deiner Nähe – mit direkter Buchung,
+          Verfügbarkeitsmanagement und Sicherheitsfunktionen.
+        </p>
+
+        <div class="hero__actions" id="login">
+          <a class="control btn primary" href="register-care.html">Als Pflegekraft arbeiten</a>
+          <a class="control btn" href="register-client.html">Pflege anfragen</a>
+        </div>
+
+        <div class="hero__search" role="search" aria-label="Standort suchen">
+          <label class="sr-only" for="q">PLZ oder Ort</label>
+          <input id="q" class="control" type="text" placeholder="PLZ / Ort eingeben…" />
+          <button class="control btn" type="button">Suchen</button>
+        </div>
+
+        <div class="hero__hint muted">
+          Tipp: Später kann die Suche als Tab (Pflegekraft/Service/Zeitraum) erweitert werden.
+        </div>
+      </div>
+
+      <div class="hero__panel">
+        <div class="card">
+          <h3>Direkt starten</h3>
+          <p class="muted">Wähle deinen Bereich – Pflegekraft oder Klient – und melde dich an.</p>
+
+          <div class="grid2">
+            <a class="control btn primary" href="login-care.html">Pflegekraft anmelden</a>
+            <a class="control btn" href="login-client.html">Klient anmelden</a>
+          </div>
+        </div>
+
+        <div class="card" id="features">
+          <h3>Warum Nursy?</h3>
+          <ul class="list">
+            <li>Standortbasierte Suche</li>
+            <li>Direkte Buchung</li>
+            <li>Verfügbarkeit & Kalender</li>
+            <li>Sicherheits-Features</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="how">
+      <div class="section__head">
+        <h2>So funktioniert’s</h2>
+        <p class="muted">Übersichtlich in Karten – Funktionen später bei Bedarf in Tabs.</p>
+      </div>
+
+      <div class="cards3">
+        <div class="card">
+          <h3>1. Profil</h3>
+          <p class="muted">Anmelden, Profil anlegen, Qualifikationen/Bedarf hinterlegen.</p>
+        </div>
+        <div class="card">
+          <h3>2. Finden</h3>
+          <p class="muted">Pflegekräfte in der Nähe suchen oder Anfrage erstellen.</p>
+        </div>
+        <div class="card">
+          <h3>3. Buchen</h3>
+          <p class="muted">Termin wählen, bestätigen, sicher kommunizieren.</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer__inner">
+      <span class="muted">© Nursy – Pflege mit Herz</span>
+      <div class="footer__links">
+        <a href="#">Impressum</a>
+        <a href="#">Datenschutz</a>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>

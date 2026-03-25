@@ -1,0 +1,156 @@
+<!doctype html>
+<html lang="de">
+<head><meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Nursy – Profil & Qualifikation (Pflegekraft)</title><link rel="stylesheet" href="styles.css" /></head>
+<body>
+<header class="topbar">
+  <div class="container topbar__inner">
+    <a class="brand" href="index.html" aria-label="Nursy Startseite">
+      <span class="brand__dot" aria-hidden="true"></span>
+      <span class="brand__text">
+        <strong>Nursy</strong>
+        <span>Pflege mit Herz</span>
+      </span>
+    </a>
+
+    <nav class="nav" aria-label="Hauptnavigation">
+      <a href="functions.html">Funktionen</a>
+      <a href="how.html">So funktioniert’s</a>
+      <a href="index.html#login">Login</a>
+    </nav>
+  </div>
+</header>
+
+<main class="container">
+<section class="section">
+  <div class="section__head">
+    <h2>Pflegekraft – Profil & Qualifikation</h2>
+    <p class="muted">Schritt 3 von 4: Profil</p>
+  </div>
+
+  <div class="card">
+    <form class="form" data-demo-next="care">
+      <div class="form-error" role="alert"></div>
+
+      
+      <div class="card card--inner">
+        <h3 style="margin-top:0;">Kurzbeschreibung / beruflicher Hintergrund</h3>
+        <p class="muted" style="margin-top:6px;">
+          Beschreibe kurz und übersichtlich deinen beruflichen Werdegang, Erfahrungsschwerpunkte
+          und was dich als Pflegekraft auszeichnet.
+        </p>
+
+        <div class="field" style="margin-top:12px;">
+          <label class="field__label" for="p-bio">Kurzbeschreibung</label>
+          <textarea class="control" id="p-bio" rows="4"
+            placeholder="z. B. DGKP mit 10 Jahren Erfahrung in der Langzeitpflege, Schwerpunkt Wundmanagement und Demenzbetreuung."
+            required></textarea>
+          <div class="help">Max. 3–5 Sätze, gut lesbar für Klienten.</div>
+        </div>
+      </div>
+    
+      </div>
+
+      <div style="height:12px"></div>
+
+      <div class="grid2">
+        <div class="field">
+          <label class="field__label" for="p-qual-main">Grundqualifikation</label>
+          <select class="control" id="p-qual-main" required>
+            <option value="">Bitte auswählen</option>
+            <option value="DGKP">DGKP (Dipl. Gesundheits- und Krankenpflege)</option>
+            <option value="PA">Pflegeassistenz (PA)</option>
+            <option value="PFA">Pflegefachassistenz (PFA)</option>
+            <option value="Heimhilfe">Heimhilfe</option>
+            <option value="Sozialbetreuung">Sozialbetreuung / Behindertenbegleitung</option>
+            <option value="Sonstiges">Sonstiges</option>
+          </select>
+          <div class="help">Wähle deine Hauptqualifikation.</div>
+        </div>
+
+        <div class="field" id="qualOtherWrap" style="display:none;">
+          <label class="field__label" for="p-qual-other">Sonstiges (bitte angeben)</label>
+          <input class="control" id="p-qual-other" type="text" placeholder="z. B. Rettungssanitäter, Med. Fachbereich…" />
+          <div class="help">Wird als Hauptqualifikation gespeichert.</div>
+        </div>
+      </div>
+
+      <div style="height:12px"></div>
+
+      <div class="field">
+        <label class="field__label">Zusatzausbildungen (AT / Sonstiges)</label>
+        <div class="help">Wähle Zusatzausbildungen aus. Du kannst beliebig viele hinzufügen.</div>
+
+        <div id="extrasList" class="extras">
+          <div class="extras__row">
+            <select class="control extras__select">
+              <option value="">Bitte auswählen</option>
+              <option>Wundmanagement</option>
+              <option>Palliativpflege</option>
+              <option>Demenzbegleitung</option>
+              <option>Basale Stimulation</option>
+              <option>Kinästhetik</option>
+              <option>Stomaversorgung</option>
+              <option>Diabetesberatung</option>
+              <option>Medikamentenmanagement</option>
+              <option>Intensiv-/Akutpflege</option>
+              <option>Sonstiges</option>
+            </select>
+            <input class="control extras__other" type="text" placeholder="Sonstiges (optional)" style="display:none;" />
+            <button class="control btn extras__remove" type="button">Entfernen</button>
+          </div>
+        </div>
+
+        <div style="height:10px"></div>
+        <button class="control btn" id="addExtra" type="button">+ Weitere Zusatzausbildung</button>
+      </div>
+
+      <div style="height:12px"></div>
+
+      <div class="card card--inner">
+        <h3 style="margin-top:0;">Gesundheitsberufsregister – Nachweis</h3>
+        <p class="muted" style="margin-top:6px;">Bitte Vorderseite und Rückseite hochladen (Demo: nur Dateiauswahl, keine Server-Speicherung).</p>
+
+        <div class="grid2" style="margin-top:12px;">
+          <div class="field">
+            <label class="field__label" for="gbr-front">Vorderseite</label>
+            <input class="control" id="gbr-front" type="file" accept="image/*,application/pdf" required />
+            <div class="help">Foto oder PDF.</div>
+          </div>
+
+          <div class="field">
+            <label class="field__label" for="gbr-back">Rückseite</label>
+            <input class="control" id="gbr-back" type="file" accept="image/*,application/pdf" required />
+            <div class="help">Foto oder PDF.</div>
+          </div>
+        </div>
+
+        <div class="field" style="margin-top:12px;">
+          <label class="field__label" for="gbr-id">Register-Nummer (optional)</label>
+          <input class="control" id="gbr-id" type="text" placeholder="z. B. GBR-Nummer" />
+          <div class="help">Optional, falls vorhanden.</div>
+        </div>
+      </div>
+
+      <div style="height:18px"></div>
+
+      <button class="control btn primary" type="submit">Weiter zu Verfügbarkeit</button>
+
+      <p class="note" style="margin-top:12px;">Demo: Danach definierst du deine Einsatzzeiten.</p>
+</form>
+  </div>
+</section>
+</main>
+<footer class="footer">
+  <div class="container footer__inner">
+    <span class="muted">© Nursy – Pflege mit Herz</span>
+    <div class="footer__links">
+      <a href="#">Impressum</a>
+      <a href="#">Datenschutz</a>
+    </div>
+  </div>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>

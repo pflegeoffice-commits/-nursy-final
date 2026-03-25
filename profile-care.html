@@ -1,0 +1,300 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Nursy – Profil</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+<header class="topbar">
+    <div class="container topbar__inner">
+      <a class="brand" href="index.html" aria-label="Nursy Startseite">
+        <span class="brand__dot" aria-hidden="true"></span>
+        <span class="brand__text">
+          <strong>Nursy</strong>
+          <span>Pflege mit Herz</span>
+        </span>
+      </a>
+
+      <nav class="nav" aria-label="Hauptnavigation">
+        <a href="functions.html">Funktionen</a>
+        <a href="how.html">So funktioniert’s</a>
+        <a href="#login">Login</a>
+      </nav>
+    </div>
+  </header>
+
+<main class="container">
+  <section class="section">
+    <div class="section__head">
+      <h2>Profil</h2>
+      <p class="muted">Alle Infos auf einen Blick – Foto, Adresse und Einsatzzeiten.</p>
+    </div>
+
+    <!-- Profilkopf -->
+    <div class="card">
+      <div class="profile-head">
+        <div class="profile-photo">
+          <div class="avatar avatar--photo" id="avatarPreview" aria-label="Profilfoto">
+            <span>Foto</span>
+          </div>
+
+          <div class="profile-photo__actions">
+            <label class="control btn" for="photoInput">Foto ändern</label>
+            <input id="photoInput" type="file" accept="image/*" class="sr-only" />
+            <button class="control btn" id="removePhoto" type="button">Foto entfernen</button>
+            <p class="note">Demo: Foto wird im Browser gespeichert.</p>
+          </div>
+        </div>
+
+        <div class="profile-meta">
+          <h3 style="margin:0;">Test Pflegekraft</h3>
+          <p class="muted" style="margin:6px 0 0 0;">Pflegekraft · Bezirk: <span id="bezirkLabel">Beispielbezirk</span></p>
+
+          <div class="profile-meta__bar">
+            <span class="pill" id="todayTimePill">Heute 08:00–16:00</span>
+            <span class="pill" id="tomorrowTimePill">Morgen —</span>
+            <a class="control btn" href="dashboard-care.html">Zurück</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Persönliche Daten -->
+    <div class="card">
+      <div class="dash-rowhead">
+        <h3>Persönliche Daten</h3>
+        <button class="control btn primary" id="saveProfileTop" type="button">Änderungen speichern</button>
+      </div>
+
+      <form class="form" id="profileForm">
+        <div class="form-error" id="profileMsg" role="status" aria-live="polite"></div>
+
+        <div class="grid2">
+          <div class="field">
+            <label class="field__label" for="firstName">Vorname</label>
+            <input class="control" id="firstName" type="text" placeholder="z. B. Anna" required />
+          </div>
+          <div class="field">
+            <label class="field__label" for="lastName">Nachname</label>
+            <input class="control" id="lastName" type="text" placeholder="z. B. Pflege" required />
+          </div>
+        </div>
+
+        <div style="height:12px"></div>
+
+        <div class="field">
+          <label class="field__label" for="street">Straße & Hausnummer</label>
+          <input class="control" id="street" type="text" placeholder="z. B. Hauptstraße 12" required />
+        </div>
+
+        <div style="height:12px"></div>
+
+        <div class="grid2">
+          <div class="field">
+            <label class="field__label" for="zip">PLZ</label>
+            <input class="control" id="zip" type="text" inputmode="numeric" placeholder="z. B. 4020" required />
+          </div>
+          <div class="field">
+            <label class="field__label" for="city">Wohnort</label>
+            <input class="control" id="city" type="text" placeholder="z. B. Linz" required />
+          </div>
+        </div>
+
+        <div style="height:12px"></div>
+
+        <div class="grid2">
+          <div class="field">
+            <label class="field__label" for="district">Bezirk</label>
+            <select class="control" id="district" required>
+              <option value="">Bitte auswählen</option>
+              <option>Linz</option>
+              <option>Linz-Land</option>
+              <option>Wels</option>
+              <option>Wels-Land</option>
+              <option>Steyr</option>
+              <option>Steyr-Land</option>
+              <option>Vöcklabruck</option>
+              <option>Gmunden</option>
+              <option>Sonstiges</option>
+            </select>
+          </div>
+          <div class="field" id="districtOtherWrap" style="display:none;">
+            <label class="field__label" for="districtOther">Bezirk (Sonstiges)</label>
+            <input class="control" id="districtOther" type="text" placeholder="Bezirk eingeben" />
+          </div>
+        </div>
+
+        <div style="height:12px"></div>
+
+        <div class="field">
+          <label class="field__label" for="bio">Kurzbeschreibung</label>
+          <textarea class="control" id="bio" rows="4" placeholder="3–5 Sätze über Erfahrung, Schwerpunkte…" required></textarea>
+          <div class="help">Wird Klienten angezeigt.</div>
+        </div>
+
+        <div style="height:12px"></div>
+
+        <div class="field">
+          <label class="field__label" for="qualMain">Grundqualifikation</label>
+          <select class="control" id="qualMain" required>
+            <option value="">Bitte auswählen</option>
+            <option value="DGKP">DGKP (Dipl. Gesundheits- und Krankenpflege)</option>
+            <option value="PA">Pflegeassistenz (PA)</option>
+            <option value="PFA">Pflegefachassistenz (PFA)</option>
+            <option value="Heimhilfe">Heimhilfe</option>
+            <option value="Sozialbetreuung">Sozialbetreuung / Behindertenbegleitung</option>
+            <option value="Sonstiges">Sonstiges</option>
+          </select>
+        </div>
+
+        <div class="field" id="qualOtherWrap" style="display:none; margin-top:10px;">
+          <label class="field__label" for="qualOther">Grundqualifikation (Sonstiges)</label>
+          <input class="control" id="qualOther" type="text" placeholder="z. B. Rettungssanitäter…" />
+        </div>
+
+        <div style="height:12px"></div>
+
+        <div class="field">
+          <label class="field__label">Zusatzausbildungen</label>
+          <div id="extrasList" class="extras">
+            <div class="extras__row">
+              <select class="control extras__select">
+                <option value="">Bitte auswählen</option>
+                <option>Wundmanagement</option>
+                <option>Palliativpflege</option>
+                <option>Demenzbegleitung</option>
+                <option>Basale Stimulation</option>
+                <option>Kinästhetik</option>
+                <option>Stomaversorgung</option>
+                <option>Diabetesberatung</option>
+                <option>Medikamentenmanagement</option>
+                <option>Intensiv-/Akutpflege</option>
+                <option>Sonstiges</option>
+              </select>
+              <input class="control extras__other" type="text" placeholder="Sonstiges (optional)" style="display:none;" />
+              <button class="control btn extras__remove" type="button">Entfernen</button>
+            </div>
+          </div>
+
+          <div style="height:10px"></div>
+          <button class="control btn" id="addExtra" type="button">+ Weitere Zusatzausbildung</button>
+        </div>
+
+        <div style="height:12px"></div>
+
+        <div class="card card--inner">
+          <h3 style="margin-top:0;">Gesundheitsberufsregister – Nachweis</h3>
+          <p class="muted" style="margin-top:6px;">Bitte Vorderseite und Rückseite hochladen (Demo: wird im Browser gespeichert).</p>
+
+          <div class="grid2" style="margin-top:12px;">
+            <div class="field">
+              <label class="field__label" for="gbrFront">Vorderseite</label>
+              <input class="control" id="gbrFront" type="file" accept="image/*,application/pdf" />
+              <div class="help" id="gbrFrontStatus">Noch nicht hochgeladen</div>
+            </div>
+
+            <div class="field">
+              <label class="field__label" for="gbrBack">Rückseite</label>
+              <input class="control" id="gbrBack" type="file" accept="image/*,application/pdf" />
+              <div class="help" id="gbrBackStatus">Noch nicht hochgeladen</div>
+            </div>
+          </div>
+        </div>
+
+      </form>
+    </div>
+
+    <!-- Einsatzzeiten -->
+    <div class="card">
+      <div class="dash-rowhead">
+        <h3>Einsatzzeiten</h3>
+        <button class="control btn primary" id="saveTimes" type="button">Zeiten speichern</button>
+      </div>
+
+      <div class="availability availability--compact" id="availabilityGrid">
+        
+        <div class="avail-row avail-row--compact">
+          <div class="avail-day">Mo</div>
+          <div class="avail-range">
+            <input class="control avail-time small" type="time" data-day="Mo" data-slot="start">
+            <span class="avail-sep">–</span>
+            <input class="control avail-time small" type="time" data-day="Mo" data-slot="end">
+          </div>
+        </div>
+        
+        <div class="avail-row avail-row--compact">
+          <div class="avail-day">Di</div>
+          <div class="avail-range">
+            <input class="control avail-time small" type="time" data-day="Di" data-slot="start">
+            <span class="avail-sep">–</span>
+            <input class="control avail-time small" type="time" data-day="Di" data-slot="end">
+          </div>
+        </div>
+        
+        <div class="avail-row avail-row--compact">
+          <div class="avail-day">Mi</div>
+          <div class="avail-range">
+            <input class="control avail-time small" type="time" data-day="Mi" data-slot="start">
+            <span class="avail-sep">–</span>
+            <input class="control avail-time small" type="time" data-day="Mi" data-slot="end">
+          </div>
+        </div>
+        
+        <div class="avail-row avail-row--compact">
+          <div class="avail-day">Do</div>
+          <div class="avail-range">
+            <input class="control avail-time small" type="time" data-day="Do" data-slot="start">
+            <span class="avail-sep">–</span>
+            <input class="control avail-time small" type="time" data-day="Do" data-slot="end">
+          </div>
+        </div>
+        
+        <div class="avail-row avail-row--compact">
+          <div class="avail-day">Fr</div>
+          <div class="avail-range">
+            <input class="control avail-time small" type="time" data-day="Fr" data-slot="start">
+            <span class="avail-sep">–</span>
+            <input class="control avail-time small" type="time" data-day="Fr" data-slot="end">
+          </div>
+        </div>
+        
+        <div class="avail-row avail-row--compact">
+          <div class="avail-day">Sa</div>
+          <div class="avail-range">
+            <input class="control avail-time small" type="time" data-day="Sa" data-slot="start">
+            <span class="avail-sep">–</span>
+            <input class="control avail-time small" type="time" data-day="Sa" data-slot="end">
+          </div>
+        </div>
+        
+        <div class="avail-row avail-row--compact">
+          <div class="avail-day">So</div>
+          <div class="avail-range">
+            <input class="control avail-time small" type="time" data-day="So" data-slot="start">
+            <span class="avail-sep">–</span>
+            <input class="control avail-time small" type="time" data-day="So" data-slot="end">
+          </div>
+        </div>
+        
+      </div>
+
+      <p class="note" style="margin-top:12px;">Diese Zeiten werden im Dashboard angezeigt.</p>
+    </div>
+
+  </section>
+</main>
+
+<footer class="footer">
+    <div class="container footer__inner">
+      <span class="muted">© Nursy – Pflege mit Herz</span>
+      <div class="footer__links">
+        <a href="#">Impressum</a>
+        <a href="#">Datenschutz</a>
+      </div>
+    </div>
+  </footer>
+<script src="script.js"></script>
+</body>
+</html>

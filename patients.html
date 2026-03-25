@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Nursy – Meine Klienten</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+<header class="topbar">
+    <div class="container topbar__inner">
+      <a class="brand" href="index.html" aria-label="Nursy Startseite">
+        <span class="brand__dot" aria-hidden="true"></span>
+        <span class="brand__text">
+          <strong>Nursy</strong>
+          <span>Pflege mit Herz</span>
+        </span>
+      </a>
+
+      <nav class="nav" aria-label="Hauptnavigation">
+        <a href="functions.html">Funktionen</a>
+        <a href="how.html">So funktioniert’s</a>
+        <a href="#login">Login</a>
+      </nav>
+    </div>
+  </header>
+<main class="container patients-page">
+  <section class="card">
+    <div class="patients-head">
+      <div>
+        <h2>Meine Klienten</h2>
+        <p class="muted">Oben siehst du Einsätze für <strong>heute</strong>, darunter alle <strong>aktiven</strong> Klienten.</p>
+      </div>
+      <div class="patients-actions">
+        <button class="btn btn--ghost" id="resetPatients" type="button">Demo zurücksetzen</button>
+      </div>
+    </div>
+  </section>
+
+  <section class="card patients-section">
+    <div class="patients-section__head">
+      <h3>Heute</h3>
+      <span class="pill" id="todayCount">0</span>
+    </div>
+    <div id="todayList" class="patients-list"></div>
+    <p id="todayEmpty" class="muted patients-empty" hidden>Heute sind keine Einsätze eingetragen.</p>
+  </section>
+
+  <section class="card patients-section">
+    <div class="patients-section__head">
+      <h3>Alle aktiven Patienten</h3>
+      <span class="pill" id="activeCount">0</span>
+    </div>
+    <div id="activeList" class="patients-list"></div>
+    <p id="activeEmpty" class="muted patients-empty" hidden>Keine aktiven Patienten vorhanden.</p>
+  </section>
+</main>
+
+  <!-- Zeit bearbeiten Modal -->
+  <div class="modal" id="timeModal" hidden>
+    <div class="modal__backdrop" data-close></div>
+    <div class="modal__panel" role="dialog" aria-modal="true" aria-labelledby="timeModalTitle">
+      <div class="modal__head">
+        <h3 id="timeModalTitle">Zeit bearbeiten</h3>
+        <button class="iconbtn" type="button" data-close aria-label="Schließen">✕</button>
+      </div>
+
+      <div class="modal__body">
+        <div class="modal__field">
+          <label for="timeFrom">Von</label>
+          <input id="timeFrom" type="time" />
+        </div>
+        <div class="modal__field">
+          <label for="timeTo">Bis</label>
+          <input id="timeTo" type="time" />
+        </div>
+        <p class="modal__hint muted" id="timeHint" aria-live="polite"></p>
+      </div>
+
+      <div class="modal__actions">
+        <button class="btn btn--secondary" type="button" data-close>Abbrechen</button>
+        <button class="btn btn--danger" type="button" id="timeCancel">Auftrag stornieren</button>
+        <button class="btn btn--primary" type="button" id="timeSave">Speichern</button>
+      </div>
+    </div>
+  </div>
+
+
+<script src="patients.js"></script>
+<footer class="footer">
+    <div class="container footer__inner">
+      <span class="muted">© Nursy – Pflege mit Herz</span>
+      <div class="footer__links">
+        <a href="#">Impressum</a>
+        <a href="#">Datenschutz</a>
+      </div>
+    </div>
+  </footer>
+<script src="script.js"></script>
+</body>
+</html>

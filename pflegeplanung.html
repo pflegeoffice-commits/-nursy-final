@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Nursy – Pflegeplanung</title>
+  <link rel="stylesheet" href="styles.css?v=20260211">
+</head>
+<body data-page="pflegeplanung">
+
+  <header class="topbar">
+    <div class="container topbar__inner">
+      <a class="brand" href="index.html" aria-label="Nursy Start">
+        <span class="brand__dot" aria-hidden="true"></span>
+        <span class="brand__text">
+          <strong>Nursy</strong>
+          <span>Pflege mit Herz</span>
+        </span>
+      </a>
+
+      <nav class="nav" aria-label="Hauptnavigation">
+        <a href="index.html#funktionen">Funktionen</a>
+        <a href="index.html#so">So funktioniert’s</a>
+        <a href="login.html">Login</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="pp-wrap">
+    <div class="container">
+      <div class="pp-panel">
+
+        <div class="pp-head">
+          <div class="left">
+            <h1 class="page-title">Pflegeplanung</h1>
+            <div class="page-subtitle" id="activePatientLine">Aktiver Patient: <strong>Anna Berger</strong> (geb. 12.03.1942)</div>
+          </div>
+
+          <div class="right">
+            <label for="patientSelect">Patient auswählen</label>
+            <select id="patientSelect" class="control pp-select">
+              <option value="anna" selected>Anna Berger (geb. 12.03.1942)</option>
+              <option value="max">Max Huber (geb. 01.01.1938)</option>
+              <option value="maria">Maria Leitner (geb. 22.07.1945)</option>
+            </select>
+
+            <a class="control" href="dashboard_pflegekraft.html" style="justify-content:center;">Zurück</a>
+          </div>
+        </div>
+
+        <section aria-label="Planungsoptionen">
+          <div class="pp-row">
+            <div>
+              <strong>Aus der Anamnese übernehmen</strong>
+              <span>Automatische Vorschläge aus dem Anamnesebogen.</span>
+            </div>
+            <button class="control btn pp-action" type="button" data-open="anam">Öffnen</button>
+          </div>
+
+          <div class="pp-row">
+            <div>
+              <strong>Vorlagen für die Planung</strong>
+              <span>Vordefinierte Pflegeplanungen zur schnellen Auswahl.</span>
+            </div>
+            <button class="control btn pp-action" type="button" data-open="templates">Öffnen</button>
+          </div>
+
+          <div class="pp-row">
+            <div>
+              <strong>Freie Planung</strong>
+              <span>Eigene Pflegeplanung erstellen und speichern.</span>
+            </div>
+            <button class="control btn pp-action" type="button" data-open="free">Öffnen</button>
+          </div>
+        </section>
+
+        <section class="pp-current" aria-label="Aktuelle Planung">
+          <div class="pp-current-head">
+            <h2>Aktuelle Planung</h2>
+            <div class="pp-current-actions">
+              <a href="#" class="pp-link" id="btnEvaluate">Evaluieren</a>
+              <button class="control btn" type="button" id="btnEdit">Bearbeiten</button>
+            </div>
+          </div>
+
+          <table class="pp-table" id="planTable">
+            <thead>
+              <tr>
+                <th class="pp-col-date">Geplant am</th>
+                <th>Diagnose</th>
+                <th>Maßnahme</th>
+                <th>Ziel</th>
+                <th class="pp-col-date pp-col-date--right">Evaluation am</th>
+              </tr>
+            </thead>
+            <tbody id="planBody">
+              <tr class="pp-click" data-plan="0">
+                <td class="pp-date">—</td>
+                <td>Mobilität eingeschränkt</td>
+                <td>Mobilisation</td>
+                <td>Sicheres Gehen</td>
+                <td class="pp-date pp-date--right">—</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <div class="pp-empty" id="emptyHint" style="display:none;">Noch keine aktuelle Planung vorhanden.</div>
+        </section>
+
+      </div>
+    </div>
+  </main>
+
+  <!-- Details Modal (lightweight) -->
+  <div id="ppModal" class="modal" hidden>
+    <div class="modal__backdrop" data-close="1"></div>
+    <div class="modal__panel" role="dialog" aria-modal="true" aria-labelledby="ppModalTitle">
+      <div class="modal__head">
+        <h3 id="ppModalTitle">Planungsdetails</h3>
+        <button class="iconbtn" type="button" id="ppModalX" aria-label="Schließen">×</button>
+      </div>
+      <div class="modal__body" style="grid-template-columns:1fr;">
+        <p id="ppModalPlanned"><b>Geplant am:</b> —</p>
+        <p id="ppModalEval"><b>Evaluation am:</b> —</p>
+
+        <p id="ppModalDiag"><b>Diagnose:</b> —</p>
+        <p id="ppModalMass"><b>Maßnahme:</b> —</p>
+        <p id="ppModalZiel"><b>Ziel:</b> —</p>
+      </div>
+      <div class="modal__actions">
+        <button class="control btn" type="button" id="ppModalClose">Schließen</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal root (wird von pflegeplanung.js befüllt) -->
+  <div id="modalRoot" aria-live="polite"></div>
+
+  <script src="pflegeplanung.js?v=20260211"></script>
+</body>
+</html>

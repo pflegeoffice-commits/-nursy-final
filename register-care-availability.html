@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="de">
+<head><meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Nursy – Verfügbarkeit (Pflegekraft)</title><link rel="stylesheet" href="styles.css" /></head>
+<body>
+<header class="topbar">
+  <div class="container topbar__inner">
+    <a class="brand" href="index.html" aria-label="Nursy Startseite">
+      <span class="brand__dot" aria-hidden="true"></span>
+      <span class="brand__text">
+        <strong>Nursy</strong>
+        <span>Pflege mit Herz</span>
+      </span>
+    </a>
+
+    <nav class="nav" aria-label="Hauptnavigation">
+      <a href="functions.html">Funktionen</a>
+      <a href="how.html">So funktioniert’s</a>
+      <a href="index.html#login">Login</a>
+    </nav>
+  </div>
+</header>
+
+<main class="container">
+<section class="section">
+  <div class="section__head">
+    <h2>Pflegekraft – Verfügbarkeit</h2>
+    <p class="muted">Schritt 4 von 4: Einsatzzeiten</p>
+  </div>
+
+  <div class="card">
+    <form class="form" data-demo-next="care-finish">
+      
+      <div class="availability availability--compact">
+        
+        <div class="avail-row avail-row--compact">
+          <div class="avail-day"><label class="avail-day__label"><input type="checkbox" class="avail-check" data-day="Mo"> Mo</label></div>
+          <div class="avail-range">
+            <input class="control avail-time small" type="time" data-day="Mo" data-slot="start" disabled>
+            <span class="avail-sep">–</span>
+            <input class="control avail-time small" type="time" data-day="Mo" data-slot="end" disabled>
+          </div>
+        </div>
+    
+        <div class="avail-row avail-row--compact">
+          <div class="avail-day"><label class="avail-day__label"><input type="checkbox" class="avail-check" data-day="Di"> Di</label></div>
+          <div class="avail-range">
+            <input class="control avail-time small" type="time" data-day="Di" data-slot="start" disabled>
+            <span class="avail-sep">–</span>
+            <input class="control avail-time small" type="time" data-day="Di" data-slot="end" disabled>
+          </div>
+        </div>
+    
+        <div class="avail-row avail-row--compact">
+          <div class="avail-day"><label class="avail-day__label"><input type="checkbox" class="avail-check" data-day="Mi"> Mi</label></div>
+          <div class="avail-range">
+            <input class="control avail-time small" type="time" data-day="Mi" data-slot="start" disabled>
+            <span class="avail-sep">–</span>
+            <input class="control avail-time small" type="time" data-day="Mi" data-slot="end" disabled>
+          </div>
+        </div>
+    
+        <div class="avail-row avail-row--compact">
+          <div class="avail-day"><label class="avail-day__label"><input type="checkbox" class="avail-check" data-day="Do"> Do</label></div>
+          <div class="avail-range">
+            <input class="control avail-time small" type="time" data-day="Do" data-slot="start" disabled>
+            <span class="avail-sep">–</span>
+            <input class="control avail-time small" type="time" data-day="Do" data-slot="end" disabled>
+          </div>
+        </div>
+    
+        <div class="avail-row avail-row--compact">
+          <div class="avail-day"><label class="avail-day__label"><input type="checkbox" class="avail-check" data-day="Fr"> Fr</label></div>
+          <div class="avail-range">
+            <input class="control avail-time small" type="time" data-day="Fr" data-slot="start" disabled>
+            <span class="avail-sep">–</span>
+            <input class="control avail-time small" type="time" data-day="Fr" data-slot="end" disabled>
+          </div>
+        </div>
+    
+        <div class="avail-row avail-row--compact">
+          <div class="avail-day"><label class="avail-day__label"><input type="checkbox" class="avail-check" data-day="Sa"> Sa</label></div>
+          <div class="avail-range">
+            <input class="control avail-time small" type="time" data-day="Sa" data-slot="start" disabled>
+            <span class="avail-sep">–</span>
+            <input class="control avail-time small" type="time" data-day="Sa" data-slot="end" disabled>
+          </div>
+        </div>
+    
+        <div class="avail-row avail-row--compact">
+          <div class="avail-day"><label class="avail-day__label"><input type="checkbox" class="avail-check" data-day="So"> So</label></div>
+          <div class="avail-range">
+            <input class="control avail-time small" type="time" data-day="So" data-slot="start" disabled>
+            <span class="avail-sep">–</span>
+            <input class="control avail-time small" type="time" data-day="So" data-slot="end" disabled>
+          </div>
+        </div>
+    
+      </div>
+
+      <div style="height:18px"></div>
+    
+      <button class="control btn primary" type="submit">Verfügbarkeit speichern</button>
+      <p class="note" style="margin-top:12px;">Demo: Danach bist du aktiv und gelangst ins Pflegekraft-Dashboard.</p>
+    </form>
+  </div>
+</section>
+</main>
+<footer class="footer">
+  <div class="container footer__inner">
+    <span class="muted">© Nursy – Pflege mit Herz</span>
+    <div class="footer__links">
+      <a href="#">Impressum</a>
+      <a href="#">Datenschutz</a>
+    </div>
+  </div>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>

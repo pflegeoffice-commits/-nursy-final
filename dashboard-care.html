@@ -1,0 +1,187 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Nursy – Dashboard Pflegekraft</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+<header class="topbar">
+    <div class="container topbar__inner">
+      <a class="brand" href="index.html" aria-label="Nursy Startseite">
+        <span class="brand__dot" aria-hidden="true"></span>
+        <span class="brand__text">
+          <strong>Nursy</strong>
+          <span>Pflege mit Herz</span>
+        </span>
+      </a>
+
+      <nav class="nav" aria-label="Hauptnavigation">
+        <a href="functions.html">Funktionen</a>
+        <a href="how.html">So funktioniert’s</a>
+        <a href="#login">Login</a>
+      </nav>
+    </div>
+  </header>
+
+<main class="container">
+  <section class="section">
+    <div class="section__head">
+      <h2>Dashboard</h2>
+      <p class="muted">Dein Überblick für heute.</p>
+    </div>
+
+    <div class="dash-top">
+      <div class="card dash-profile">
+        <div class="dash-profile__inner">
+          <div class="avatar" id="dashAvatar" aria-label="Profilfoto">
+            <span>Foto</span>
+          </div>
+
+          <div class="dash-profile__meta">
+            <h3 class="dash-profile__title">Profil</h3>
+            <div class="dash-profile__lines">
+              <div><strong>Name:</strong> <span id="dashName">Test Pflegekraft</span></div>
+              <div><strong>Bezirk:</strong> <span id="dashBezirk">Beispielbezirk</span></div>
+              <div><strong>Meine Zeiten:</strong> <span id="dashTodayTime">Heute 08:00–16:00</span></div>
+              <div><strong>Morgen:</strong> <span id="dashTomorrowTime">Morgen —</span></div>
+            </div>
+
+            <div class="dash-profile__actions">
+              <a class="control btn" href="profile-care.html">Profil öffnen</a>
+            <a class="btn btn--soft" href="pflegeplanung.html" style="margin-left:10px;">Pflegeplanung</a></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card dash-map">
+        <div class="dash-map__head">
+          <h3>Karte</h3>
+          <span class="muted">Google Maps (Demo)</span>
+        </div>
+        <div class="dash-map__frame" role="img" aria-label="Karte Platzhalter">
+          <div class="dash-map__placeholder">
+            <div class="dash-map__title">Warte Google Maps</div>
+            <div class="muted">Hier kommt die Kartenintegration.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card dash-today">
+      <div class="dash-rowhead">
+        <h3>Meine heutigen Einsätze</h3>
+        <a class="control btn" href="patients.html">Alle ansehen</a>
+      </div>
+
+      <div class="today-list">
+        <div class="today-item">
+          <div class="today-item__main">
+            <div class="today-item__name">Patient 1</div>
+            <div class="muted">Hauptstraße 12, 4020 Linz</div>
+          </div>
+          <a class="control btn primary" href="#" data-action="Navigation starten">Navigation</a>
+        </div>
+
+        <div class="today-item">
+          <div class="today-item__main">
+            <div class="today-item__name">Patient 2</div>
+            <div class="muted">Musterweg 3, 4040 Linz</div>
+          </div>
+          <a class="control btn primary" href="#" data-action="Navigation starten">Navigation</a>
+        </div>
+      </div>
+
+      <p class="note" style="margin-top:12px;">
+        Demo: Navigation wird später über Google Maps gestartet.
+      </p>
+    </div>
+
+    <div class="dash-sections">
+      
+      <div class="card dash-section">
+        <div class="dash-row">
+          <div>
+            <h3>Anfragen</h3>
+            <p class="muted">Neue Pflegeanfragen und offene Einsätze.</p>
+          </div>
+          <a class="control btn" href="requests.html">Öffnen</a>
+        </div>
+      </div>
+<div class="card dash-section">
+        <div class="dash-row">
+          <div>
+            <h3>Meine Patienten</h3>
+            <p class="muted">Alle Klienten, Kontaktdaten und Einsatzübersicht.</p>
+          </div>
+          <a class="control btn" href="patients.html">Öffnen</a>
+        </div>
+      </div>
+
+      <div class="card dash-section">
+        <div class="dash-row">
+          <div>
+            <h3>Pflegeplanung</h3>
+            <p class="muted">Planung, Ziele, Maßnahmen und Evaluierung.</p>
+          </div>
+          <a class="control btn" href="pflegeplanung.html">Öffnen</a>
+        </div>
+      </div>
+
+      <div class="card dash-section">
+        <div class="dash-row">
+          <div>
+            <h3>Vitalzeichen</h3>
+            <p class="muted">Vitalkurve und Messwerte.</p>
+          </div>
+          <a class="control btn" href="documentation.html?vital=1">Öffnen</a>
+        </div>
+      </div>
+
+      <div class="card dash-section">
+        <div class="dash-row">
+          <div>
+            <h3>Durchführungsnachweis</h3>
+            <p class="muted">Pflegeplanung durchführen und dokumentieren.</p>
+          </div>
+          <a class="control btn" href="documentation.html#dn">Öffnen</a>
+        </div>
+      </div>
+
+      <div class="card dash-section">
+        <div class="dash-row">
+          <div>
+            <h3>Dokumentation</h3>
+            <p class="muted">Durchführungsnachweis & tägliche Dokumentation.</p>
+          </div>
+          <a class="control btn" href="documentation.html">Öffnen</a>
+        </div>
+      </div>
+
+      <div class="card dash-section">
+        <div class="dash-row">
+          <div>
+            <h3>Meine Rechnungen</h3>
+            <p class="muted">Rechnungsübersicht, Status und Export.</p>
+          </div>
+          <a class="control btn" href="invoices.html">Öffnen</a>
+        </div>
+      </div>
+    </div>
+
+  </section>
+</main>
+
+<footer class="footer">
+    <div class="container footer__inner">
+      <span class="muted">© Nursy – Pflege mit Herz</span>
+      <div class="footer__links">
+        <a href="#">Impressum</a>
+        <a href="#">Datenschutz</a>
+      </div>
+    </div>
+  </footer>
+<script src="script.js"></script>
+</body>
+</html>

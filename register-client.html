@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang="de">
+<head><meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Nursy – Registrierung Klient</title><link rel="stylesheet" href="styles.css" /></head>
+<body>
+<header class="topbar">
+  <div class="container topbar__inner">
+    <a class="brand" href="index.html" aria-label="Nursy Startseite">
+      <span class="brand__dot" aria-hidden="true"></span>
+      <span class="brand__text">
+        <strong>Nursy</strong>
+        <span>Pflege mit Herz</span>
+      </span>
+    </a>
+
+    <nav class="nav" aria-label="Hauptnavigation">
+      <a href="functions.html">Funktionen</a>
+      <a href="how.html">So funktioniert’s</a>
+      <a href="index.html#login">Login</a>
+    </nav>
+  </div>
+</header>
+
+<main class="container">
+<section class="section">
+  <div class="section__head">
+    <h2>Registrierung – Klient</h2>
+    <p class="muted">Schritt 1 von 3: Stammdaten</p>
+  </div>
+
+  <div class="card">
+    <form class="form" data-demo-register="client">
+      <div class="form-error" role="alert"></div>
+
+      <div class="grid2">
+        <div class="field">
+          <label class="field__label" for="c-vn">Vorname</label>
+          <input class="control" id="c-vn" type="text" placeholder="z. B. Maria" required />
+          <div class="help">Wie sollen wir dich ansprechen?</div>
+        </div>
+        <div class="field">
+          <label class="field__label" for="c-nn">Nachname</label>
+          <input class="control" id="c-nn" type="text" placeholder="z. B. Beispiel" required />
+          <div class="help">Für die korrekte Zuordnung.</div>
+        </div>
+      </div>
+
+      <div style="height:12px"></div>
+
+      
+      <div class="field">
+        <label class="field__label" for="c-str">Straße & Hausnummer</label>
+        <input class="control" id="c-str" type="text" placeholder="z. B. Hauptstraße 12" required />
+        <div class="help">Wird für Einsätze und Abrechnung benötigt.</div>
+      </div>
+
+      <div style="height:12px"></div>
+
+      <div class="grid2">
+        <div class="field">
+          <label class="field__label" for="c-plz">PLZ</label>
+          <input class="control" id="c-plz" type="text" inputmode="numeric" placeholder="z. B. 4020" required />
+          <div class="help">Postleitzahl.</div>
+        </div>
+
+        <div class="field">
+          <label class="field__label" for="c-ort">Wohnort</label>
+          <input class="control" id="c-ort" type="text" placeholder="z. B. Linz" required />
+          <div class="help">Ort für Matching.</div>
+        </div>
+      </div>
+
+
+      <div style="height:12px"></div>
+
+      <div class="grid2">
+        <div class="field">
+          <label class="field__label" for="c-email">E-Mail-Adresse</label>
+          <input class="control" id="c-email" type="email" placeholder="name@beispiel.at" required />
+          <div class="help">Dorthin senden wir den Bestätigungslink.</div>
+        </div>
+        <div class="field">
+          <label class="field__label" for="c-email2">E-Mail-Adresse wiederholen</label>
+          <input class="control" id="c-email2" type="email" placeholder="name@beispiel.at" required />
+          <div class="help">Bitte exakt wiederholen, um Tippfehler zu vermeiden.</div>
+        </div>
+      </div>
+
+      <div style="height:12px"></div>
+
+      <div class="grid2">
+        <div class="field">
+          <label class="field__label" for="c-pw">Passwort</label>
+          <input class="control" id="c-pw" type="password" placeholder="mind. 8 Zeichen" minlength="8" required />
+          <div class="help">Mindestens 8 Zeichen.</div>
+        </div>
+        <div class="field">
+          <label class="field__label" for="c-pw2">Passwort wiederholen</label>
+          <input class="control" id="c-pw2" type="password" placeholder="Passwort erneut eingeben" minlength="8" required />
+          <div class="help">Zur Sicherheit bitte wiederholen.</div>
+        </div>
+      </div>
+
+      <div style="height:18px"></div>
+
+      <button class="control btn primary" type="submit">Registrierung starten</button>
+
+      <p class="note" style="margin-top:12px;">
+        Du erhältst danach eine E-Mail zur Bestätigung. Erst nach Bestätigung kannst du fortfahren.
+      </p>
+    </form>
+  </div>
+</section>
+</main>
+<footer class="footer">
+  <div class="container footer__inner">
+    <span class="muted">© Nursy – Pflege mit Herz</span>
+    <div class="footer__links">
+      <a href="#">Impressum</a>
+      <a href="#">Datenschutz</a>
+    </div>
+  </div>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>

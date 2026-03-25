@@ -186,15 +186,3 @@
   updateSelectedPatientHeader();
   renderDN();
 })();
-
-
-// Vitalzeichen-Modus: DURCHFÜHRUNGSNACHWEIS ausblenden
-(function () {
-  const params = new URLSearchParams(window.location.search);
-  const isVital = params.get("vital");
-
-  if (isVital) {
-    const dnCard = document.querySelector(".dn-card");
-    if (dnCard) dnCard.style.display = "none";
-  }
-})();

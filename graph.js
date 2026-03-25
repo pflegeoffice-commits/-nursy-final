@@ -12,6 +12,21 @@ const data = [
 const canvas = document.getElementById('chart');
 const ctx = canvas.getContext('2d');
 
+function setupHiDPICanvas() {
+  const dpr = window.devicePixelRatio || 1;
+  const width = 1400;
+  const height = 280;
+
+  canvas.style.width = width + "px";
+  canvas.style.height = height + "px";
+  canvas.width = Math.round(width * dpr * 2);
+  canvas.height = Math.round(height * dpr * 2);
+
+  ctx.setTransform(1, 0, 0, 1, 0, 0);
+  ctx.scale(dpr * 2, dpr * 2);
+  ctx.imageSmoothingEnabled = false;
+}
+
 const topPad = 20;
 const bottomPad = 240;
 const startX = 70;
@@ -24,7 +39,7 @@ function yV(v){ return bottomPad - ((v - 0) / (10 - 0)) * (bottomPad - topPad); 
 
 function drawGrid(){
   ctx.fillStyle = '#ffffff';
-  ctx.fillRect(0, 0, canvas.width, canvas.height);
+  ctx.fillRect(0, 0, 1400, 280);
 
   for(let i=0;i<=12;i++){
     const y = topPad + ((bottomPad - topPad) / 12) * i;
@@ -32,7 +47,7 @@ function drawGrid(){
     ctx.lineWidth = i % 2 === 0 ? 1.4 : 1;
     ctx.beginPath();
     ctx.moveTo(0, y);
-    ctx.lineTo(canvas.width, y);
+    ctx.lineTo(1400, y);
     ctx.stroke();
   }
 
@@ -96,9 +111,10 @@ function drawRRandPulse(){
     ctx.closePath();
     ctx.fill();
 
-    ctx.fillStyle = '#cf2f2f';
-    ctx.font = '15px Arial';
-    ctx.fillText('❤', x-6, yRR(d.p)+5);
+    ctx.beginPath();
+    ctx.arc(Math.round(x), Math.round(yRR(d.p)), 4, 0, Math.PI * 2);
+    ctx.fillStyle = "#e53935";
+    ctx.fill();
   });
 }
 
@@ -143,7 +159,8 @@ function updateTable(){
 }
 
 function renderChart(){
-  ctx.clearRect(0,0,canvas.width,canvas.height);
+  setupHiDPICanvas();
+  ctx.clearRect(0,0,1400,280);
   drawGrid();
   drawPolyline(data.map(d=>d.o), '#336af1', yO);
   drawPolyline(data.map(d=>d.t), '#e48a24', yT);
@@ -154,12 +171,24 @@ function renderChart(){
   updateTable();
 }
 
-openModal.onclick = () => modal.hidden = false;
-close.onclick = () => modal.hidden = true;
-document.querySelector('.doc-modal__backdrop').onclick = () => modal.hidden = true;
-toggleTable.onclick = () => { tableWrap.hidden = !tableWrap.hidden; };
+document.getElementById("openModal").onclick = () => {
+  document.getElementById("modal").hidden = false;
+};
 
-save.onclick = () => {
+document.getElementById("close").onclick = () => {
+  document.getElementById("modal").hidden = true;
+};
+
+document.querySelector("#modal .doc-modal__backdrop").onclick = () => {
+  document.getElementById("modal").hidden = true;
+};
+
+document.getElementById("toggleTable").onclick = () => {
+  document.getElementById("tableWrap").hidden =
+    !document.getElementById("tableWrap").hidden;
+};
+
+document.getElementById("save").onclick = () => {
   data.push({
     date: date.value || '2026-03-10',
     time: time.value || '08:00',
@@ -170,7 +199,7 @@ save.onclick = () => {
     t: +temp.value || 36.8,
     v: +vas.value || 3
   });
-  modal.hidden = true;
+  document.getElementById("modal").hidden = true;
   renderChart();
 };
 

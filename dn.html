@@ -3,18 +3,52 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Nursy Durchführungsnachweis</title>
+<title>Nursy – Durchführungsnachweis</title>
 <link rel="stylesheet" href="documentation.css">
+<link rel="stylesheet" href="dn_time_filter.css">
 </head>
-<body>
+<body class="documentation-page">
 
-<!-- dein bestehender Inhalt bleibt unverändert -->
+<div class="doc-container">
+  <h2>Durchführungsnachweis</h2>
+
+  <div class="doc-head">
+    <div>
+      <strong>Patient:</strong> <span id="patientName">Patient 3</span><br>
+      <strong>Geburtsdatum:</strong> <span id="patientDob">01.01.1950</span>
+    </div>
+
+    <div class="doc-actions">
+      <button id="selectPatientBtn" class="doc-btn" type="button">Pat auswählen</button>
+    </div>
+  </div>
+
+  <section class="dn-card">
+    <div class="dn-head">
+      <div>
+        <h3>DURCHFÜHRUNGSNACHWEIS</h3>
+        <div class="dn-sub" id="dnSubtitle">Pflegeplanung für Patient 3</div>
+      </div>
+    </div>
+    <div id="dnList"></div>
+  </section>
+</div>
+
+<div id="patientModal" class="doc-modal" hidden>
+  <div class="doc-modal__backdrop" data-close-patient></div>
+  <div class="doc-modal-box">
+    <h3>Patient auswählen</h3>
+    <label>Patient
+      <select id="patientSelect" class="doc-select"></select>
+    </label>
+    <div class="doc-modal__actions">
+      <button id="savePatientSelection" class="doc-btn doc-btn--primary" type="button">Übernehmen</button>
+      <button id="closePatientSelection" class="doc-btn" type="button">Schließen</button>
+    </div>
+  </div>
+</div>
 
 <script src="documentation.js"></script>
-
-<!-- FIX: Filter wieder aktiv -->
-<link rel="stylesheet" href="dn_time_filter.css">
 <script src="dn_time_filter.js"></script>
-
 </body>
 </html>

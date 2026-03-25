@@ -1,0 +1,15 @@
+.dn-filter-bar{
+  display:flex;
+  gap:10px;
+  margin-top:8px;
+  flex-wrap:wrap;
+}
+
+#dnBlockFilter,#dnStatusFilter{
+  height:40px;
+  border-radius:999px;
+  padding:0 14px;
+  border:1px solid #ccd5e5;
+  background:#fff;
+  font-weight:600;
+}

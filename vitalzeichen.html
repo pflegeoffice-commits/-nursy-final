@@ -1,0 +1,331 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Nursy – Vitalzeichen</title>
+  <style>
+    :root{
+      --vz-border:1px solid rgba(63,111,232,.14);
+      --vz-blue:#3f6fe8;
+      --vz-text:#1d2b4f;
+      --vz-muted:#78839f;
+      --vz-green:#2f8f4e;
+      --vz-red:#cf2f2f;
+      --vz-o2:#336af1;
+      --vz-orange:#e48a24;
+      --vz-purple:#7b3fe0;
+      --vz-shadow:0 8px 18px rgba(15,26,51,.04);
+    }
+    *{box-sizing:border-box}
+    body{margin:0;background:linear-gradient(180deg,#eef4ff,#e3edff);color:var(--vz-text);font-family: ui-serif, Georgia, "Times New Roman", serif;}
+    .topbar{background:linear-gradient(180deg,#ffffff,#eef4ff);border-bottom:1px solid rgba(63,111,232,.18);}
+    .container{width:min(1580px, 95vw);margin:0 auto;}
+    .topbar__inner{display:flex;align-items:center;gap:12px;padding:14px 0;}
+    .brand{display:flex;align-items:center;gap:12px;color:inherit;text-decoration:none;}
+    .brand__dot{width:14px;height:14px;border-radius:999px;background: radial-gradient(circle at 30% 30%, #ffffff, #3f6fe8);box-shadow: 0 0 0 6px rgba(63,111,232,.15);}
+    .brand__text{display:flex;flex-direction:column;line-height:1.05;}
+    .brand__text span{font-size:14px;color:#6d7894;}
+    .vz-page{width:min(1580px, 95vw);margin:0 auto;padding:10px 0 22px;}
+    .back{margin:12px 0;}
+    .back a{display:inline-flex;align-items:center;justify-content:center;height:40px;padding:0 12px;border-radius:12px;border:var(--vz-border);background:#fff;color:var(--vz-text);font-size:14px;font-weight:800;text-decoration:none;}
+    .vz-top{display:flex;justify-content:space-between;align-items:flex-start;gap:14px;margin-bottom:14px;}
+    .vz-patient{font-size:20px;line-height:1.18;font-weight:800;color:var(--vz-text);}
+    .vz-patient span{font-weight:600;}
+    .vz-actions{display:flex;gap:10px;flex-wrap:wrap;}
+    .vz-pill{min-width:132px;height:44px;border-radius:999px;border:1px solid rgba(63,111,232,.16);background:#fff;color:#4464a6;font-size:14px;font-weight:800;box-shadow:0 6px 16px rgba(15,26,51,.05);cursor:pointer;}
+    .vz-pill--active{background:var(--vz-blue);color:#fff;border-color:var(--vz-blue);}
+    .vz-layout{display:grid;grid-template-columns:190px 1fr;gap:12px;align-items:stretch;}
+    .vz-scale{height:310px;border:var(--vz-border);border-radius:20px;background:rgba(255,255,255,.84);box-shadow:var(--vz-shadow);padding:12px 12px 10px;display:grid;grid-template-columns:1fr 1fr 1fr 1.2fr;gap:6px 8px;overflow:visible;}
+    .vz-col{text-align:center;font-size:14px;font-weight:800;line-height:1.52;}
+    .vz-green{color:var(--vz-green)} .vz-orange{color:var(--vz-orange)} .vz-o2{color:var(--vz-o2)} .vz-purple{color:var(--vz-purple)}
+    .vz-scale-foot{grid-column:1 / -1;align-self:end;display:grid;grid-template-columns:1.1fr 1fr 1fr 1.2fr;gap:6px 8px;text-align:center;font-size:14px;font-weight:800;line-height:1.08;white-space:nowrap;overflow:visible;}
+    .vz-chart-shell{display:flex;flex-direction:column;min-width:0;}
+    .vz-chart-card{height:310px;border:var(--vz-border);border-radius:20px;background:rgba(255,255,255,.84);box-shadow:var(--vz-shadow);padding:8px 10px 6px;overflow-x:auto;overflow-y:hidden;}
+    .vz-chart-inner{min-width:1200px;height:100%;}
+    #chart{width:100%;height:100%;display:block;background:#fff;border-radius:14px;}
+    .vz-caption{font-size:14px;color:var(--vz-muted);margin:8px 0 0 12px;}
+    .vz-legend{display:flex;gap:10px;flex-wrap:wrap;margin:12px 0 10px;}
+    .vz-chip{display:inline-flex;align-items:center;gap:8px;padding:8px 14px;border-radius:999px;border:var(--vz-border);background:#fff;box-shadow:0 6px 14px rgba(15,26,51,.04);font-size:14px;font-weight:800;color:var(--vz-text);}
+    .vz-dot{width:12px;height:12px;border-radius:50%;display:inline-block;}
+    .vz-metrics{display:grid;grid-template-columns:repeat(5, 1fr);gap:10px;}
+    .vz-metric{border:var(--vz-border);border-radius:18px;background:rgba(255,255,255,.88);box-shadow:var(--vz-shadow);padding:10px 12px;min-height:70px;}
+    .vz-metric .label{font-size:14px;color:#65718c;margin-bottom:6px;}
+    .vz-metric .value{font-size:18px;font-weight:800;line-height:1;color:var(--vz-text);}
+    #tableWrap[hidden]{display:none !important;}
+    .vz-table-card{margin-top:12px;border:var(--vz-border);border-radius:18px;background:#fff;box-shadow:var(--vz-shadow);overflow:auto;}
+    .vz-table{width:100%;border-collapse:collapse;min-width:850px;font-family: ui-serif, Georgia, "Times New Roman", serif;}
+    .vz-table th,.vz-table td{padding:12px 14px;text-align:left;border-bottom:1px solid #e6edf7;font-size:14px;}
+    .vz-table th{background:#f7f9fe;font-weight:800;}
+    .modal[hidden]{display:none;} .modal{position:fixed;inset:0;z-index:1000;}
+    .modal__backdrop{position:absolute;inset:0;background:rgba(11,27,58,.36);backdrop-filter:blur(4px);}
+    .modal__panel{position:relative;width:min(380px, calc(100% - 28px));margin:10vh auto 0;background:#fff;border-radius:18px;border:1px solid rgba(11,27,58,.12);box-shadow:0 30px 90px rgba(11,27,58,.25);overflow:hidden;}
+    .modal__head{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:12px 14px;border-bottom:1px solid rgba(11,27,58,.10);}
+    .modal__head h3{margin:0;font-size:16px;}
+    .modal__body{display:flex;flex-direction:column;gap:6px;padding:10px 12px 6px;}
+    .modal__field label{display:block;font-size:11px;color:rgba(11,27,58,.7);margin-bottom:2px;}
+    .modal__field input,.modal__field select{width:100%;height:30px;padding:0 6px;border-radius:8px;border:1px solid rgba(11,27,58,.12);background:rgba(248,251,255,.9);font:inherit;font-size:12px;font-weight:700;}
+    .modal__actions{display:flex;gap:8px;padding:10px 12px 12px;}
+    .iconbtn{width:34px;height:34px;border-radius:10px;border:1px solid rgba(11,27,58,.10);background:rgba(255,255,255,.8);cursor:pointer;font-weight:800;font-size:20px;line-height:1;}
+    .control.btn{height:40px;border-radius:12px;border:var(--vz-border);background:#fff;color:var(--vz-text);padding:0 12px;font-size:14px;display:inline-flex;align-items:center;justify-content:center;gap:8px;font-weight:800;cursor:pointer;}
+    .control.btn.primary{background:var(--vz-blue);color:#fff;border-color:var(--vz-blue);}
+    @media (max-width: 980px){.vz-top{flex-direction:column;}.vz-layout{grid-template-columns:1fr;}.vz-metrics{grid-template-columns:repeat(2,1fr);}}
+    @media (max-width: 560px){.vz-actions{width:100%;}.vz-pill{flex:1;min-width:0;}.vz-metrics{grid-template-columns:1fr;}.vz-patient{font-size:18px;}}
+  </style>
+</head>
+<body>
+<header class="topbar">
+  <div class="container topbar__inner">
+    <a class="brand" href="dashboard-care.html">
+      <span class="brand__dot"></span>
+      <span class="brand__text"><strong>Nursy</strong><span>Pflege mit Herz</span></span>
+    </a>
+  </div>
+</header>
+
+<main class="vz-page">
+  <div class="back"><a href="dashboard-care.html">← Zurück zum Dashboard</a></div>
+  <div class="vz-top">
+    <div class="vz-patient">Patient: <span id="currentPatientName">Patient 3</span><br>Geburtsdatum: <span id="currentPatientBirth">01.01.1950</span></div>
+    <div class="vz-actions">
+      <button class="vz-pill" id="openPatientSelect" type="button">Pat auswählen</button>
+      <button class="vz-pill vz-pill--active" id="openModal" type="button">Neue Werte</button>
+      <button class="vz-pill" id="toggleTable" type="button">Tabelle</button>
+    </div>
+  </div>
+
+  <section class="vz-layout">
+    <div class="vz-scale">
+      <div class="vz-col vz-green">200<br>180<br>160<br>140<br>120<br>100<br>80<br>60<br>40<br>20</div>
+      <div class="vz-col vz-orange">41<br>40<br>39<br>38<br>37<br>36<br>35</div>
+      <div class="vz-col vz-o2">100<br>95<br>90<br>85<br>80<br>75<br>70</div>
+      <div class="vz-col vz-purple">10<br>9<br>8<br>7<br>6<br>5<br>4<br>3<br>2<br>1<br>0</div>
+      <div class="vz-scale-foot">
+        <div class="vz-green">RR /<br>Puls</div>
+        <div class="vz-orange">Temp</div>
+        <div class="vz-o2">SpO₂</div>
+        <div class="vz-purple">VAS</div>
+      </div>
+    </div>
+
+    <div class="vz-chart-shell">
+      <div class="vz-chart-card">
+        <div class="vz-chart-inner">
+          <canvas id="chart" width="1280" height="310"></canvas>
+        </div>
+      </div>
+      <div class="vz-caption">Datum</div>
+    </div>
+  </section>
+
+  <div class="vz-legend">
+    <div class="vz-chip"><span class="vz-dot" style="background:#2f8f4e"></span>RR</div>
+    <div class="vz-chip"><span class="vz-dot" style="background:#cf2f2f"></span>Puls</div>
+    <div class="vz-chip"><span class="vz-dot" style="background:#336af1"></span>SpO₂</div>
+    <div class="vz-chip"><span class="vz-dot" style="background:#e48a24"></span>Temperatur</div>
+    <div class="vz-chip"><span class="vz-dot" style="background:#7b3fe0"></span>VAS</div>
+  </div>
+
+  <div class="vz-metrics">
+    <div class="vz-metric"><div class="label">RR</div><div class="value" id="m_rr"></div></div>
+    <div class="vz-metric"><div class="label">Puls</div><div class="value" id="m_p"></div></div>
+    <div class="vz-metric"><div class="label">SpO₂</div><div class="value" id="m_o"></div></div>
+    <div class="vz-metric"><div class="label">Temp</div><div class="value" id="m_t"></div></div>
+    <div class="vz-metric"><div class="label">VAS</div><div class="value" id="m_v"></div></div>
+  </div>
+
+  <div id="tableWrap" hidden>
+    <div class="vz-table-card">
+      <table class="vz-table">
+        <thead><tr><th>Datum</th><th>Zeit</th><th>RR</th><th>Puls</th><th>SpO₂</th><th>Temp</th><th>VAS</th></tr></thead>
+        <tbody id="tableBody"></tbody>
+      </table>
+    </div>
+  </div>
+</main>
+
+<div id="patientModal" class="modal" hidden>
+  <div class="modal__backdrop" id="closePatientBackdrop"></div>
+  <div class="modal__panel">
+    <div class="modal__head">
+      <h3>Patient auswählen</h3>
+      <button id="closePatientModal" class="iconbtn" type="button">×</button>
+    </div>
+    <div class="modal__body">
+      <div class="modal__field">
+        <label>Patient im Einsatz</label>
+        <select id="patientSelect">
+          <option value="0">Patient 1 · 15.02.1949</option>
+          <option value="1">Patient 2 · 22.11.1952</option>
+          <option value="2" selected>Patient 3 · 01.01.1950</option>
+        </select>
+      </div>
+    </div>
+    <div class="modal__actions"><button id="savePatientSelect" class="control btn primary" type="button">Übernehmen</button></div>
+  </div>
+</div>
+
+<div id="modal" class="modal" hidden>
+  <div class="modal__backdrop" id="closeValuesBackdrop"></div>
+  <div class="modal__panel">
+    <div class="modal__head">
+      <h3>Neue Werte</h3>
+      <button id="close" class="iconbtn" type="button">×</button>
+    </div>
+    <div class="modal__body">
+      <div class="modal__field"><label>Datum</label><input id="date" type="date" /></div>
+      <div class="modal__field"><label>Zeit</label><input id="time" type="time" /></div>
+      <div class="modal__field"><label>Systolisch</label><input id="sys" type="number" /></div>
+      <div class="modal__field"><label>Diastolisch</label><input id="dia" type="number" /></div>
+      <div class="modal__field"><label>Puls</label><input id="pulse" type="number" /></div>
+      <div class="modal__field"><label>SpO₂</label><input id="o2" type="number" /></div>
+      <div class="modal__field"><label>Temp</label><input id="temp" type="number" step="0.1" /></div>
+      <div class="modal__field"><label>VAS</label><input id="vas" type="number" /></div>
+    </div>
+    <div class="modal__actions"><button id="save" class="control btn primary" type="button">Speichern</button></div>
+  </div>
+</div>
+
+<script>
+const patients = [
+  { name: 'Patient 1', birth: '15.02.1949' },
+  { name: 'Patient 2', birth: '22.11.1952' },
+  { name: 'Patient 3', birth: '01.01.1950' }
+];
+let data = [
+  {date:'2026-03-08',time:'08:00',sys:128,dia:81,p:79,o:95,t:37.1,v:3},
+  {date:'2026-03-08',time:'12:00',sys:130,dia:85,p:82,o:96,t:37.0,v:2},
+  {date:'2026-03-08',time:'16:00',sys:122,dia:78,p:76,o:97,t:36.8,v:4},
+  {date:'2026-03-08',time:'20:00',sys:135,dia:88,p:84,o:94,t:37.2,v:3},
+  {date:'2026-03-09',time:'08:00',sys:124,dia:79,p:80,o:97,t:36.9,v:2},
+  {date:'2026-03-09',time:'12:00',sys:126,dia:82,p:83,o:96,t:37.0,v:3},
+  {date:'2026-03-09',time:'16:30',sys:120,dia:70,p:78,o:97,t:36.8,v:3},
+  {date:'2026-03-09',time:'20:00',sys:132,dia:86,p:85,o:95,t:37.1,v:4}
+];
+
+const canvas = document.getElementById('chart');
+const ctx = canvas.getContext('2d');
+
+function dims(){
+  return { topPad: 28, bottomPad: canvas.height - 42, startX: 86, step: (canvas.width - 116) / Math.max(1, data.length - 1) };
+}
+function mapY(value, min, max){
+  const { topPad, bottomPad } = dims();
+  return bottomPad - ((value - min) / (max - min)) * (bottomPad - topPad);
+}
+function drawGrid(){
+  const { topPad, bottomPad, startX, step } = dims();
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+  ctx.fillStyle = '#ffffff';
+  ctx.fillRect(0,0,canvas.width,canvas.height);
+  for(let i=0;i<=9;i++){
+    const y = topPad + ((bottomPad - topPad) / 9) * i;
+    ctx.strokeStyle = i % 2 === 0 ? '#b0b8c8' : '#dde4ef';
+    ctx.lineWidth = i % 2 === 0 ? 1.4 : 1;
+    ctx.beginPath(); ctx.moveTo(0,y); ctx.lineTo(canvas.width,y); ctx.stroke();
+  }
+  data.forEach((d,i)=>{
+    const x = startX + i * step;
+    ctx.strokeStyle = '#edf1f7'; ctx.lineWidth = 1;
+    ctx.beginPath(); ctx.moveTo(x,0); ctx.lineTo(x,bottomPad); ctx.stroke();
+  });
+}
+function drawPolyline(values, color, mapFn){
+  const { startX, step } = dims();
+  ctx.strokeStyle = color; ctx.lineWidth = 2.6; ctx.beginPath();
+  values.forEach((val,i)=>{ const x = startX + i * step; const y = mapFn(val); if(i===0) ctx.moveTo(x,y); else ctx.lineTo(x,y);});
+  ctx.stroke();
+  values.forEach((val,i)=>{ const x = startX + i * step; const y = mapFn(val); ctx.fillStyle=color; ctx.beginPath(); ctx.arc(x,y,3.4,0,Math.PI*2); ctx.fill();});
+}
+function drawRRandPulse(){
+  const { startX, step } = dims();
+  data.forEach((d,i)=>{
+    const x = startX + i * step;
+    const ySys = mapY(d.sys,20,200);
+    const yDia = mapY(d.dia,20,200);
+    ctx.strokeStyle='#2f8f4e'; ctx.lineWidth=2.6; ctx.beginPath(); ctx.moveTo(x,ySys); ctx.lineTo(x,yDia); ctx.stroke();
+    ctx.fillStyle='#2f8f4e';
+    ctx.beginPath(); ctx.moveTo(x-7,ySys-4); ctx.lineTo(x+7,ySys-4); ctx.lineTo(x,ySys+9); ctx.closePath(); ctx.fill();
+    ctx.beginPath(); ctx.moveTo(x-7,yDia+4); ctx.lineTo(x+7,yDia+4); ctx.lineTo(x,yDia-9); ctx.closePath(); ctx.fill();
+    ctx.fillStyle='#cf2f2f'; ctx.font='16px Arial'; ctx.fillText('❤', x-7, mapY(d.p,20,200)+5);
+  });
+}
+function drawAxisLabels(){
+  const { startX, step } = dims();
+  data.forEach((d,i)=>{
+    const x = startX + i * step;
+    ctx.fillStyle='#5a6483'; ctx.font='12px Arial'; ctx.fillText(d.time, x-18, canvas.height - 20);
+    if(i===0 || data[i-1].date !== d.date){
+      ctx.font='11px Arial'; ctx.fillStyle='#8891aa'; ctx.fillText(d.date, x-30, canvas.height - 5);
+    }
+  });
+}
+function updateMetrics(){
+  const d = data[data.length - 1];
+  document.getElementById('m_rr').innerText = d.sys + '/' + d.dia;
+  document.getElementById('m_p').innerText = d.p;
+  document.getElementById('m_o').innerText = d.o;
+  document.getElementById('m_t').innerText = Number(d.t).toFixed(1);
+  document.getElementById('m_v').innerText = d.v;
+}
+function updateTable(){
+  const tableBody = document.getElementById('tableBody'); tableBody.innerHTML = '';
+  data.forEach(d=>{
+    const tr = document.createElement('tr');
+    tr.innerHTML = `<td>${d.date}</td><td>${d.time}</td><td>${d.sys}/${d.dia}</td><td>${d.p}</td><td>${d.o}</td><td>${d.t}</td><td>${d.v}</td>`;
+    tableBody.appendChild(tr);
+  });
+}
+function renderChart(){
+  drawGrid();
+  drawPolyline(data.map(d=>d.o), '#336af1', v => mapY(v,70,100));
+  drawPolyline(data.map(d=>d.t), '#e48a24', v => mapY(v,35,41));
+  drawPolyline(data.map(d=>d.v), '#7b3fe0', v => mapY(v,0,10));
+  drawRRandPulse();
+  drawAxisLabels();
+  updateMetrics();
+  updateTable();
+}
+
+const patientModal = document.getElementById('patientModal');
+document.getElementById('openPatientSelect').addEventListener('click', ()=> patientModal.hidden = false);
+document.getElementById('closePatientModal').addEventListener('click', ()=> patientModal.hidden = true);
+document.getElementById('closePatientBackdrop').addEventListener('click', ()=> patientModal.hidden = true);
+document.getElementById('savePatientSelect').addEventListener('click', ()=>{
+  const p = patients[Number(document.getElementById('patientSelect').value)];
+  document.getElementById('currentPatientName').textContent = p.name;
+  document.getElementById('currentPatientBirth').textContent = p.birth;
+  patientModal.hidden = true;
+});
+
+const valuesModal = document.getElementById('modal');
+document.getElementById('openModal').addEventListener('click', ()=> valuesModal.hidden = false);
+document.getElementById('close').addEventListener('click', ()=> valuesModal.hidden = true);
+document.getElementById('closeValuesBackdrop').addEventListener('click', ()=> valuesModal.hidden = true);
+
+document.getElementById('toggleTable').addEventListener('click', (e)=>{
+  const wrap = document.getElementById('tableWrap');
+  wrap.hidden = !wrap.hidden;
+  e.currentTarget.classList.toggle('vz-pill--active', !wrap.hidden);
+});
+
+document.getElementById('save').addEventListener('click', ()=>{
+  data.push({
+    date: document.getElementById('date').value || '2026-03-10',
+    time: document.getElementById('time').value || '08:00',
+    sys: +document.getElementById('sys').value || 120,
+    dia: +document.getElementById('dia').value || 80,
+    p: +document.getElementById('pulse').value || 80,
+    o: +document.getElementById('o2').value || 97,
+    t: +document.getElementById('temp').value || 36.8,
+    v: +document.getElementById('vas').value || 3
+  });
+  valuesModal.hidden = true;
+  renderChart();
+});
+
+renderChart();
+window.addEventListener('resize', renderChart);
+</script>
+</body>
+</html>

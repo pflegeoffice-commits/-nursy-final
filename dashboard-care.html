@@ -76,20 +76,26 @@
       </div>
 
       <div class="today-list">
-        <div class="today-item">
+        <div class="today-item" data-patient-id="p1" data-patient-name="Patient 1" data-patient-birth="15.02.1949">
           <div class="today-item__main">
             <div class="today-item__name">Patient 1</div>
             <div class="muted">Hauptstraße 12, 4020 Linz</div>
           </div>
-          <a class="control btn primary" href="#" data-action="Navigation starten">Navigation</a>
+          <div style="display:flex;gap:10px;flex-wrap:wrap;">
+            <a class="control btn" href="dokumentation.html" data-open-doc>Dokumentation</a>
+            <a class="control btn primary" href="#" data-action="Navigation starten">Navigation</a>
+          </div>
         </div>
 
-        <div class="today-item">
+        <div class="today-item" data-patient-id="p2" data-patient-name="Patient 2" data-patient-birth="22.11.1952">
           <div class="today-item__main">
             <div class="today-item__name">Patient 2</div>
             <div class="muted">Musterweg 3, 4040 Linz</div>
           </div>
-          <a class="control btn primary" href="#" data-action="Navigation starten">Navigation</a>
+          <div style="display:flex;gap:10px;flex-wrap:wrap;">
+            <a class="control btn" href="dokumentation.html" data-open-doc>Dokumentation</a>
+            <a class="control btn primary" href="#" data-action="Navigation starten">Navigation</a>
+          </div>
         </div>
       </div>
 
@@ -99,6 +105,17 @@
     </div>
 
     <div class="dash-sections">
+
+      <div class="card dash-section">
+        <div class="dash-row">
+          <div>
+            <h3>Anfragen</h3>
+            <p class="muted">Neue Buchungsanfragen von Patienten.</p>
+          </div>
+          <a class="control btn" href="anfragen.html">Öffnen</a>
+        </div>
+      </div>
+
       <div class="card dash-section">
         <div class="dash-row">
           <div>
@@ -119,13 +136,35 @@
         </div>
       </div>
 
+
+      <div class="card dash-section">
+        <div class="dash-row">
+          <div>
+            <h3>Vitalzeichen</h3>
+            <p class="muted">Erfassung und Übersicht der aktuellen Vitalwerte.</p>
+          </div>
+          <a class="control btn" href="vitalzeichen.html">Öffnen</a>
+        </div>
+      </div>
+
+
+      <div class="card dash-section">
+        <div class="dash-row">
+          <div>
+            <h3>Durchführungsnachweis</h3>
+            <p class="muted">Leistungen, Maßnahmen und Nachweise direkt einsehen.</p>
+          </div>
+          <a class="control btn" href="durchfuehrungsnachweis.html">Öffnen</a>
+        </div>
+      </div>
+
       <div class="card dash-section">
         <div class="dash-row">
           <div>
             <h3>Dokumentation</h3>
             <p class="muted">Durchführungsnachweis & tägliche Dokumentation.</p>
           </div>
-          <a class="control btn" href="documentation.html">Öffnen</a>
+          <a class="control btn" href="dokumentation.html">Öffnen</a>
         </div>
       </div>
 
@@ -155,3 +194,19 @@
 <script src="script.js"></script>
 </body>
 </html>
+
+<script>
+document.addEventListener('DOMContentLoaded', function(){
+  document.querySelectorAll('[data-open-doc]').forEach(function(link){
+    link.addEventListener('click', function(){
+      var item = link.closest('.today-item');
+      if(!item) return;
+      try{
+        localStorage.setItem('nursy_current_patient_id', item.getAttribute('data-patient-id') || '');
+        localStorage.setItem('nursy_current_patient_name', item.getAttribute('data-patient-name') || '');
+        localStorage.setItem('nursy_current_patient_birth', item.getAttribute('data-patient-birth') || '');
+      }catch(e){}
+    });
+  });
+});
+</script>

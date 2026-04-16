@@ -1,0 +1,563 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Nursy – Dokumentation</title>
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    .doc-page{ padding:24px 0 40px; }
+    .doc-head{
+      display:flex;
+      align-items:flex-start;
+      justify-content:space-between;
+      gap:14px;
+      margin-bottom:16px;
+    }
+    .doc-head__title h1{ margin:0 0 6px; font-size:34px; }
+    .doc-head__title p{ margin:0; color:var(--muted); }
+    .doc-toolbar{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      align-items:center;
+    }
+    .doc-toolbar .control{ min-width:170px; }
+
+    .doc-panel{ padding:18px; }
+    .doc-grid{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:14px;
+      margin-bottom:14px;
+    }
+    .doc-list{
+      display:grid;
+      gap:12px;
+      margin-top:8px;
+    }
+    .doc-entry{
+      background:rgba(255,255,255,.75);
+      border:var(--border);
+      border-radius:16px;
+      padding:14px;
+    }
+    .doc-entry__meta{
+      display:flex;
+      gap:8px;
+      flex-wrap:wrap;
+      align-items:center;
+      margin-bottom:8px;
+      color:var(--muted);
+      font-size:14px;
+    }
+    .doc-entry__patient{
+      font-weight:800;
+      color:var(--text);
+    }
+    .doc-entry__text{
+      line-height:1.5;
+      color:var(--text);
+      white-space:pre-wrap;
+    }
+    .doc-empty{
+      padding:16px;
+      border-radius:14px;
+      border:var(--border);
+      background:rgba(255,255,255,.55);
+      color:var(--muted);
+    }
+
+    .doc-badge{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      min-height:28px;
+      padding:0 10px;
+      border-radius:999px;
+      border:1px solid rgba(15,26,51,.10);
+      background:rgba(15,26,51,.04);
+      font-size:12px;
+      font-weight:800;
+      white-space:nowrap;
+    }
+    .doc-badge--group{
+      background:rgba(63,111,232,.10);
+      border-color:rgba(63,111,232,.22);
+      color:#0f2f6a;
+    }
+    .doc-badge--plan{
+      background:rgba(63,198,192,.12);
+      border-color:rgba(63,198,192,.28);
+      color:#0b6b67;
+    }
+    .doc-badge--important{
+      background:rgba(220,38,38,.12);
+      border-color:rgba(220,38,38,.26);
+      color:#b91c1c;
+    }
+
+    .doc-modal[hidden]{ display:none; }
+    .doc-modal{
+      position:fixed;
+      inset:0;
+      z-index:1000;
+    }
+    .doc-modal__backdrop{
+      position:absolute;
+      inset:0;
+      background:rgba(11,27,58,.45);
+      backdrop-filter:blur(6px);
+    }
+    .doc-modal__panel{
+      position:relative;
+      width:min(620px, calc(100% - 28px));
+      margin:7vh auto 0;
+      background:#fff;
+      border-radius:16px;
+      border:1px solid rgba(11,27,58,.12);
+      box-shadow:0 30px 90px rgba(11,27,58,.25);
+      overflow:hidden;
+    }
+    .doc-modal__head{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+      padding:14px 16px;
+      border-bottom:1px solid rgba(11,27,58,.10);
+    }
+    .doc-modal__head h3{ margin:0; font-size:18px; }
+    .doc-modal__body{
+      display:grid;
+      gap:12px;
+      padding:14px 16px 10px;
+    }
+    .doc-field{
+      display:grid;
+      gap:6px;
+    }
+    .doc-field label{
+      font-size:13px;
+      color:rgba(11,27,58,.72);
+    }
+    .doc-field .control{
+      width:100%;
+    }
+    .doc-row2{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:12px;
+    }
+    textarea.control{
+      min-height:110px;
+      padding:12px 14px;
+      resize:vertical;
+      font-family:inherit;
+    }
+    .doc-toggle{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      font-size:14px;
+      color:var(--text);
+    }
+    .doc-toggle input{
+      width:18px;
+      height:18px;
+      accent-color:var(--primary);
+    }
+    .doc-modal__actions{
+      display:flex;
+      gap:10px;
+      padding:12px 16px 16px;
+    }
+    .doc-modal__actions .btn{
+      flex:1;
+    }
+
+    @media (max-width: 760px){
+      .doc-head{ flex-direction:column; }
+      .doc-grid{ grid-template-columns:1fr; }
+      .doc-row2{ grid-template-columns:1fr; }
+      .doc-toolbar{ width:100%; }
+      .doc-toolbar .control{ flex:1; min-width:0; }
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="container topbar__inner">
+      <a class="brand" href="dashboard-care.html">
+        <span class="brand__dot"></span>
+        <span class="brand__text">
+          <strong>Nursy</strong>
+          <span>Pflege mit Herz</span>
+        </span>
+      </a>
+      <nav class="nav">
+        <a href="dashboard-care.html">Dashboard</a>
+        <a href="vitalzeichen.html">Vitalzeichen</a>
+        <a href="durchfuehrungsnachweis.html">Durchführungsnachweis</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container doc-page">
+    <div class="doc-head">
+      <div class="doc-head__title">
+        <h1>Dokumentation</h1>
+        <p>Pflegeberichte, planungsspezifische Einträge, Übergaben und wichtige Hinweise pro Patient.</p>
+        <div id="activePatientInfo" style="margin-top:10px;font-weight:800;color:var(--text);"></div>
+      </div>
+      <div class="doc-toolbar">
+        <button class="control btn btn--soft" type="button" onclick="location.href='dashboard-care.html'">← Zurück</button>
+        <button class="control btn primary" id="openDocModal" type="button">Neuer Eintrag</button>
+      </div>
+    </div>
+
+    <section class="card doc-panel">
+      <div class="doc-grid">
+        <div class="field">
+          <label class="field__label" for="filterPatient">Patient</label>
+          <select id="filterPatient" class="control"></select>
+        </div>
+        <div class="field">
+          <label class="field__label" for="filterType">Filter</label>
+          <select id="filterType" class="control">
+            <option value="alle">Alle Einträge</option>
+            <option value="allgemein">Nur allgemein</option>
+            <option value="planung">Nur planungsspezifisch</option>
+            <option value="important">Nur wichtige</option>
+          </select>
+        </div>
+      </div>
+
+      <div id="docList" class="doc-list"></div>
+      <div id="docEmpty" class="doc-empty" hidden>Für diese Auswahl gibt es noch keine Einträge.</div>
+    </section>
+  </main>
+
+  <div id="docModal" class="doc-modal" hidden>
+    <div class="doc-modal__backdrop" id="docModalBackdrop"></div>
+    <div class="doc-modal__panel">
+      <div class="doc-modal__head">
+        <h3>Neuer Dokumentationseintrag</h3>
+        <button class="iconbtn" id="closeDocModal" type="button">×</button>
+      </div>
+
+      <div class="doc-modal__body">
+        <div class="doc-field">
+          <label for="docPatient">Patient</label>
+          <select id="docPatient" class="control"></select>
+        </div>
+
+        <div class="doc-row2">
+          <div class="doc-field">
+            <label for="docType">Art</label>
+            <select id="docType" class="control">
+              <option value="allgemein">Allgemein</option>
+              <option value="planung">Planungsspezifisch</option>
+            </select>
+          </div>
+          <div class="doc-field">
+            <label for="docGroup">Gruppe</label>
+            <select id="docGroup" class="control">
+              <option value="Pfleger">Pfleger</option>
+              <option value="Physio">Physio</option>
+              <option value="Arzt">Arzt</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="doc-field" id="docPlanWrap" hidden>
+          <label for="docPlan">Maßnahme aus Planung</label>
+          <select id="docPlan" class="control">
+            <option value="Mobilisation">Mobilisation</option>
+            <option value="Medikamentengabe">Medikamentengabe</option>
+            <option value="Flüssigkeitsbilanz">Flüssigkeitsbilanz</option>
+            <option value="Wundversorgung">Wundversorgung</option>
+          </select>
+        </div>
+
+        <div class="doc-row2">
+          <div class="doc-field">
+            <label for="docDate">Datum</label>
+            <input id="docDate" class="control" type="date">
+          </div>
+          <div class="doc-field">
+            <label for="docTime">Zeit</label>
+            <input id="docTime" class="control" type="time">
+          </div>
+        </div>
+
+        <div class="doc-field">
+          <label for="docText">Eintrag</label>
+          <textarea id="docText" class="control" placeholder="Dokumentation eingeben ..."></textarea>
+        </div>
+
+        <label class="doc-toggle">
+          <input id="docImportant" type="checkbox">
+          Wichtigen Eintrag hervorheben
+        </label>
+      </div>
+
+      <div class="doc-modal__actions">
+        <button class="control btn btn--soft" id="cancelDocModal" type="button">Schließen</button>
+        <button class="control btn primary" id="saveDocEntry" type="button">Speichern</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+  <script>
+(function(){
+  const KEY = 'nursy_dokumentation_v3';
+  const CURRENT_ID_KEY = 'nursy_current_patient_id';
+  const CURRENT_NAME_KEY = 'nursy_current_patient_name';
+  const CURRENT_BIRTH_KEY = 'nursy_current_patient_birth';
+
+  function safeJSON(raw, fallback){
+    try{
+      const parsed = JSON.parse(raw);
+      return parsed ?? fallback;
+    }catch(e){
+      return fallback;
+    }
+  }
+
+  function loadPatients(){
+    const raw = localStorage.getItem('nursy_patients_v1');
+    const list = safeJSON(raw, []);
+    if(Array.isArray(list) && list.length) return list;
+    return [
+      { id:'p1', name:'Patient 1', birth:'15.02.1949', address:'Hauptstraße 12, 4020 Linz', visits:[] },
+      { id:'p2', name:'Patient 2', birth:'22.11.1952', address:'Musterweg 3, 4040 Linz', visits:[] },
+      { id:'p3', name:'Patient 3', birth:'01.01.1950', address:'Bahnhofstraße 8, 4020 Linz', visits:[] }
+    ];
+  }
+
+  const patients = loadPatients().map(function(p, index){
+    return {
+      id: p.id || ('p' + (index + 1)),
+      name: p.name || ('Patient ' + (index + 1)),
+      birth: p.birth || p.birthDate || p.dob || '',
+      address: p.address || ''
+    };
+  });
+
+  function getCurrentPatientId(){
+    const currentId = localStorage.getItem(CURRENT_ID_KEY);
+    return currentId || (patients[0] ? patients[0].id : 'p1');
+  }
+
+  function getCurrentPatient(){
+    return patients.find(function(p){ return p.id === getCurrentPatientId(); }) || patients[0];
+  }
+
+  function setCurrentPatient(patient){
+    if(!patient) return;
+    localStorage.setItem(CURRENT_ID_KEY, patient.id || '');
+    localStorage.setItem(CURRENT_NAME_KEY, patient.name || '');
+    localStorage.setItem(CURRENT_BIRTH_KEY, patient.birth || '');
+    updateActivePatientInfo();
+  }
+
+  function getPlansForPatient(patientId){
+    const customKey = 'nursy_plan_' + patientId;
+    const storedPlans = safeJSON(localStorage.getItem(customKey), null);
+    if(Array.isArray(storedPlans) && storedPlans.length){
+      return storedPlans.map(function(item){
+        return typeof item === 'string' ? item : (item.measure || item.title || 'Maßnahme');
+      });
+    }
+    return ['Mobilisation', 'Medikamentengabe', 'Flüssigkeitsbilanz', 'Wundversorgung'];
+  }
+
+  const seed = [
+    { patientId:'p3', patientName:'Patient 3', birth:'01.01.1950', type:'allgemein', plan:'', group:'Pfleger', date:'2026-03-31', time:'08:10', text:'Patient wach, orientiert und kooperativ. Allgemeinzustand stabil.', important:false },
+    { patientId:'p3', patientName:'Patient 3', birth:'01.01.1950', type:'planung', plan:'Mobilisation', group:'Physio', date:'2026-03-31', time:'10:30', text:'Mobilisation an die Bettkante mit Unterstützung durchgeführt. Kreislauf stabil.', important:true }
+  ];
+
+  function loadEntries(){
+    const entries = safeJSON(localStorage.getItem(KEY), null);
+    return Array.isArray(entries) ? entries : seed.slice();
+  }
+  function saveEntries(entries){
+    localStorage.setItem(KEY, JSON.stringify(entries));
+  }
+
+  let entries = loadEntries();
+
+  const activePatientInfo = document.getElementById('activePatientInfo');
+  const filterPatient = document.getElementById('filterPatient');
+  const filterType = document.getElementById('filterType');
+  const docList = document.getElementById('docList');
+  const docEmpty = document.getElementById('docEmpty');
+  const docModal = document.getElementById('docModal');
+  const openDocModal = document.getElementById('openDocModal');
+  const closeDocModal = document.getElementById('closeDocModal');
+  const cancelDocModal = document.getElementById('cancelDocModal');
+  const docModalBackdrop = document.getElementById('docModalBackdrop');
+  const docPatient = document.getElementById('docPatient');
+  const docType = document.getElementById('docType');
+  const docPlanWrap = document.getElementById('docPlanWrap');
+  const docPlan = document.getElementById('docPlan');
+  const docGroup = document.getElementById('docGroup');
+  const docDate = document.getElementById('docDate');
+  const docTime = document.getElementById('docTime');
+  const docText = document.getElementById('docText');
+  const docImportant = document.getElementById('docImportant');
+  const saveDocEntry = document.getElementById('saveDocEntry');
+
+  function updateActivePatientInfo(){
+    const p = getCurrentPatient();
+    if(activePatientInfo && p){
+      activePatientInfo.textContent = 'Aktueller Patient: ' + p.name + (p.birth ? ' · ' + p.birth : '');
+    }
+  }
+
+  function fillPatients(select, withAll){
+    select.innerHTML = '';
+    if(withAll){
+      const all = document.createElement('option');
+      all.value = 'alle';
+      all.textContent = 'Alle Patienten';
+      select.appendChild(all);
+    }
+    patients.forEach(function(p){
+      const opt = document.createElement('option');
+      opt.value = p.id;
+      opt.textContent = p.name + (p.birth ? ' · ' + p.birth : '');
+      select.appendChild(opt);
+    });
+    select.value = withAll ? getCurrentPatientId() : getCurrentPatientId();
+  }
+
+  function togglePlanField(){
+    const isPlan = docType.value === 'planung';
+    docPlanWrap.hidden = !isPlan;
+    if(isPlan){
+      const plans = getPlansForPatient(docPatient.value);
+      docPlan.innerHTML = '';
+      plans.forEach(function(plan){
+        const opt = document.createElement('option');
+        opt.value = plan;
+        opt.textContent = plan;
+        docPlan.appendChild(opt);
+      });
+    }
+  }
+
+  function openModal(){
+    const current = getCurrentPatient();
+    if(current) docPatient.value = current.id;
+    togglePlanField();
+    docModal.hidden = false;
+  }
+
+  function closeModal(){
+    docModal.hidden = true;
+  }
+
+  function render(){
+    const patientVal = filterPatient.value || getCurrentPatientId();
+    const typeVal = filterType.value || 'alle';
+
+    let visible = entries.filter(function(entry){
+      return patientVal === 'alle' ? true : entry.patientId === patientVal;
+    });
+
+    if(typeVal === 'allgemein') visible = visible.filter(function(e){ return e.type === 'allgemein'; });
+    if(typeVal === 'planung') visible = visible.filter(function(e){ return e.type === 'planung'; });
+    if(typeVal === 'important') visible = visible.filter(function(e){ return !!e.important; });
+
+    visible.sort(function(a,b){
+      return (b.date + ' ' + b.time).localeCompare(a.date + ' ' + a.time);
+    });
+
+    docList.innerHTML = '';
+    docEmpty.hidden = visible.length !== 0;
+
+    visible.forEach(function(e){
+      const el = document.createElement('article');
+      el.className = 'doc-entry';
+      el.innerHTML = `
+        <div class="doc-entry__meta">
+          <span class="doc-entry__patient">${e.patientName}</span>
+          <span>${e.date} · ${e.time}</span>
+          <span class="doc-badge doc-badge--group">${e.group}</span>
+          ${e.type === 'planung'
+            ? `<span class="doc-badge doc-badge--plan">${e.plan}</span>`
+            : `<span class="doc-badge">Allgemein</span>`}
+          ${e.important ? `<span class="doc-badge doc-badge--important">Wichtig</span>` : ``}
+        </div>
+        <div class="doc-entry__text">${e.text}</div>
+      `;
+      docList.appendChild(el);
+    });
+  }
+
+  saveDocEntry.addEventListener('click', function(){
+    const patient = patients.find(function(p){ return p.id === docPatient.value; }) || patients[0];
+    const entry = {
+      patientId: patient.id,
+      patientName: patient.name,
+      birth: patient.birth,
+      type: docType.value,
+      plan: docType.value === 'planung' ? (docPlan.value || '') : '',
+      group: docGroup.value,
+      date: docDate.value || new Date().toISOString().slice(0,10),
+      time: docTime.value || '08:00',
+      text: docText.value.trim(),
+      important: docImportant.checked
+    };
+    if(!entry.text) return;
+
+    entries.unshift(entry);
+    saveEntries(entries);
+    setCurrentPatient(patient);
+
+    docText.value = '';
+    docImportant.checked = false;
+    docType.value = 'allgemein';
+    togglePlanField();
+    closeModal();
+    filterPatient.value = patient.id;
+    render();
+  });
+
+  [closeDocModal, cancelDocModal, docModalBackdrop].forEach(function(el){
+    if(el) el.addEventListener('click', closeModal);
+  });
+
+  openDocModal.addEventListener('click', openModal);
+  docType.addEventListener('change', togglePlanField);
+  docPatient.addEventListener('change', function(){
+    const patient = patients.find(function(p){ return p.id === docPatient.value; });
+    if(patient) setCurrentPatient(patient);
+    togglePlanField();
+  });
+  filterPatient.addEventListener('change', function(){
+    const patient = patients.find(function(p){ return p.id === filterPatient.value; });
+    if(patient) setCurrentPatient(patient);
+    render();
+  });
+  filterType.addEventListener('change', render);
+
+
+  fillPatients(filterPatient, true);
+  fillPatients(docPatient, false);
+  updateActivePatientInfo();
+  togglePlanField();
+
+  const now = new Date();
+  docDate.value = now.toISOString().slice(0,10);
+  docTime.value = String(now.getHours()).padStart(2,'0') + ':' + String(now.getMinutes()).padStart(2,'0');
+
+  render();
+})();
+</script>
+</script>
+</body>
+</html>

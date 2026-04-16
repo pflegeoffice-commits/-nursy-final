@@ -1,0 +1,278 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Nursy – Durchführungsnachweis</title>
+<style>
+  :root{
+    --bg:#eef4ff;
+    --card:#fff;
+    --line:#e7edf7;
+    --text:#1d2b4f;
+    --muted:#72809d;
+    --blue:#3f6fe8;
+    --green:#2f8f4e;
+    --red:#cf2f2f;
+    --border:1px solid rgba(63,111,232,.14);
+    --shadow:0 8px 18px rgba(15,26,51,.04);
+  }
+  *{box-sizing:border-box}
+  body{
+    margin:0;
+    background:linear-gradient(180deg,#eef4ff,#e3edff);
+    color:var(--text);
+    font-family: ui-serif, Georgia, "Times New Roman", serif;
+  }
+  .container{
+    width:min(1280px,95vw);
+    margin:20px auto;
+  }
+  .top{
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-start;
+    gap:16px;
+    margin-bottom:18px;
+  }
+  .patient{
+    font-size:20px;
+    font-weight:800;
+    line-height:1.2;
+  }
+  .patient span{font-weight:600}
+  .pill{
+    height:44px;
+    padding:0 16px;
+    border-radius:999px;
+    border:var(--border);
+    background:#fff;
+    color:var(--text);
+    font-weight:800;
+    cursor:pointer;
+  }
+  .pill.primary{
+    background:var(--blue);
+    color:#fff;
+    border-color:var(--blue);
+  }
+  .card{
+    background:var(--card);
+    border:var(--border);
+    border-radius:18px;
+    box-shadow:var(--shadow);
+    padding:16px;
+  }
+  .section-title{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:12px;
+    margin-bottom:14px;
+  }
+  .section-title h2{
+    margin:0;
+    font-size:22px;
+  }
+  .section-title p{
+    margin:4px 0 0;
+    color:var(--muted);
+    font-size:14px;
+  }
+  table{
+    width:100%;
+    border-collapse:collapse;
+    min-width:980px;
+  }
+  th,td{
+    padding:12px 10px;
+    border-bottom:1px solid var(--line);
+    text-align:left;
+    vertical-align:top;
+    font-size:14px;
+  }
+  th{
+    background:#f7f9fe;
+    font-weight:800;
+  }
+  tr:last-child td{border-bottom:none}
+  .table-wrap{overflow:auto}
+  .measure{
+    font-weight:800;
+    margin-bottom:4px;
+  }
+  .goal{
+    color:var(--muted);
+    font-size:12px;
+  }
+  select,input{
+    width:100%;
+    height:34px;
+    border-radius:8px;
+    border:1px solid rgba(11,27,58,.12);
+    background:#fff;
+    padding:0 8px;
+    font:inherit;
+    font-size:13px;
+  }
+  .comment{
+    height:34px;
+  }
+  .status.done{color:var(--green);font-weight:800}
+  .status.open{color:#9a6b00;font-weight:800}
+  .status.fail{color:var(--red);font-weight:800}
+  .meta-bar{
+    display:flex;
+    gap:10px;
+    flex-wrap:wrap;
+    margin-bottom:14px;
+  }
+  .meta-chip{
+    background:#fff;
+    border:var(--border);
+    border-radius:999px;
+    padding:8px 12px;
+    font-size:13px;
+    font-weight:800;
+    box-shadow:var(--shadow);
+  }
+  @media (max-width: 760px){
+    .top{flex-direction:column}
+  }
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="top">
+    <div class="patient">
+      Patient: <span>Patient 3</span><br>
+      Geburtsdatum: <span>01.01.1950</span>
+    </div>
+    <button class="pill primary" id="saveAll">Änderungen speichern</button>
+  </div>
+
+  <div class="meta-bar">
+    <div class="meta-chip">Quelle: Pflegeplanung</div>
+    <div class="meta-chip">Ansicht: Durchführungsnachweis</div>
+    <div class="meta-chip" id="todayChip"></div>
+  </div>
+
+  <div class="card">
+    <div class="section-title">
+      <div>
+        <h2>Durchführungsnachweis</h2>
+        <p>Die geplanten Maßnahmen aus der Pflegeplanung werden hier als Nachweis angezeigt.</p>
+      </div>
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Maßnahme aus Planung</th>
+            <th>Frequenz</th>
+            <th>Status</th>
+            <th>Zeit</th>
+            <th>Kommentar</th>
+          </tr>
+        </thead>
+        <tbody id="planTable"></tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<script>
+const planningData = [
+  {
+    measure: "Medikamentengabe oral",
+    goal: "Schmerzreduktion und stabile Medikation",
+    frequency: "08:00 / 20:00",
+    status: "durchgeführt",
+    time: "08:00",
+    comment: "Patient hat Medikation vollständig eingenommen."
+  },
+  {
+    measure: "Blutdruckkontrolle",
+    goal: "Kreislauf überwachen",
+    frequency: "2x täglich",
+    status: "durchgeführt",
+    time: "12:00",
+    comment: "RR im Normbereich."
+  },
+  {
+    measure: "Mobilisation an die Bettkante",
+    goal: "Erhalt der Mobilität",
+    frequency: "1x täglich",
+    status: "offen",
+    time: "",
+    comment: ""
+  },
+  {
+    measure: "Flüssigkeitsbilanz beobachten",
+    goal: "Ausreichende Hydrierung sichern",
+    frequency: "laufend",
+    status: "nicht möglich",
+    time: "",
+    comment: "Patient wollte aktuell keine Flüssigkeitsaufnahme dokumentieren."
+  }
+];
+
+const table = document.getElementById("planTable");
+const todayChip = document.getElementById("todayChip");
+todayChip.textContent = "Datum: " + new Date().toLocaleDateString("de-DE");
+
+function statusClass(status){
+  if(status === "durchgeführt") return "done";
+  if(status === "nicht möglich") return "fail";
+  return "open";
+}
+
+function render(){
+  table.innerHTML = "";
+  planningData.forEach((item, index) => {
+    const tr = document.createElement("tr");
+    tr.innerHTML = `
+      <td>
+        <div class="measure">${item.measure}</div>
+        <div class="goal">${item.goal}</div>
+      </td>
+      <td>${item.frequency}</td>
+      <td>
+        <select onchange="updateStatus(${index}, this.value)">
+          <option value="offen" ${item.status === "offen" ? "selected" : ""}>offen</option>
+          <option value="durchgeführt" ${item.status === "durchgeführt" ? "selected" : ""}>durchgeführt</option>
+          <option value="nicht möglich" ${item.status === "nicht möglich" ? "selected" : ""}>nicht möglich</option>
+        </select>
+        <div class="status ${statusClass(item.status)}" style="margin-top:6px;">${item.status}</div>
+      </td>
+      <td>
+        <input type="time" value="${item.time}" onchange="updateTime(${index}, this.value)">
+      </td>
+      <td>
+        <input class="comment" type="text" value="${item.comment.replace(/"/g, '&quot;')}" onchange="updateComment(${index}, this.value)">
+      </td>
+    `;
+    table.appendChild(tr);
+  });
+}
+
+function updateStatus(index, value){
+  planningData[index].status = value;
+  render();
+}
+function updateTime(index, value){
+  planningData[index].time = value;
+}
+function updateComment(index, value){
+  planningData[index].comment = value;
+}
+
+document.getElementById("saveAll").addEventListener("click", () => {
+  alert("Durchführungsnachweis gespeichert.");
+});
+
+render();
+</script>
+</body>
+</html>
